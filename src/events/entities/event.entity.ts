@@ -57,6 +57,9 @@ export class Event {
   @OneToMany(() => TicketTier, (ticketTier) => ticketTier.event)
   ticketTiers: TicketTier[];
 
+  @Column({ nullable: true })
+  coverUrl: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

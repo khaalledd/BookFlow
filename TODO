@@ -1,24 +1,4 @@
-**Filter by status:**
-```
-GET http://localhost:3000/events?page=1&limit=10&status=PUBLISHED
-```
-
-**Combine filters:**
-```
-GET http://localhost:3000/events?page=1&limit=10&category=CONCERT&status=PUBLISHED
-```
-
-
-**Test 2 — Cache Invalidation:**
-```
-1. GET /events           → cached response
-2. POST /events          → create a new event
-3. GET /events           → should show the new event (cache was invalidated)
-```
-
-## Step 9 — Protected Event Routes
-```
-POST http://localhost:3000/events
-Authorization: Bearer ORGANIZER_TOKEN  ✅ should work
-Authorization: Bearer ATTENDEE_TOKEN   ❌ should return 403
-No token at all                        ❌ should return 401
+Seatly 
+- attende must not be able to create event or delete event
+- attende must not be able to create venue or delete venue
+- invalidate cahe after delete event 

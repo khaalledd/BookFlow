@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -11,6 +11,8 @@ import { PaginatedResult } from '../common/types/paginated.type';
 
 @Injectable()
 export class VenuesService {
+  private readonly logger = new Logger(VenuesService.name);
+
   constructor(
     @InjectRepository(Venue)
     private readonly venueRepository: Repository<Venue>,
@@ -71,11 +73,18 @@ export class VenuesService {
   }
 
   private async invalidateVenuesCache(): Promise<void> {
-    const keys: string[] = await (this.cacheManager as any).store.keys('venues:list:*');
-    if (keys && keys.length > 0) {
-      for (const key of keys) {
-        await this.cacheManager.del(key);
+    try {
+      const store = (this.cacheManager as any).store;
+      if (store && typeof store.keys === 'function') {
+        const keys: string[] = await store.keys('venues:list:*');
+        if (keys && keys.length > 0) {
+          for (const key of keys) {
+            await this.cacheManager.del(key);
+          }
+        }
       }
+    } catch (err) {
+      this.logger.warn('Could not invalidate venues cache — entries will expire naturally');
     }
   }
 }

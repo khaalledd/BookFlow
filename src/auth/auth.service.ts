@@ -10,6 +10,7 @@ import { UsersService } from '../users/users.service';
 import { User, Role } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly eventEmitter: EventEmitter2,
   ) { }
 
   // ─── Registration ────────────────────────────────────────────
@@ -33,10 +35,13 @@ export class AuthService {
       email: registerDto.email,
       name: registerDto.name,
       password: hashedPassword,
-      role: Role.ATTENDEE,
+      role: registerDto.role || Role.ATTENDEE,
     });
 
     const { password, ...result } = savedUser;
+
+    this.eventEmitter.emit('user.registered', { email: savedUser.email });
+
     return {
       user: result,
       message: 'Registration successful! Please login to continue.',
@@ -76,6 +81,30 @@ export class AuthService {
   // ─── Get User by ID (for JWT Strategy) ──────────────────────
   async getUserById(id: string): Promise<User> {
     return this.usersService.findById(id);
+  }
+
+  // ─── Create Admin ──────────────────────────────────────────
+  async createAdmin(registerDto: RegisterDto) {
+    const existingUser = await this.usersService.findByEmail(registerDto.email);
+
+    if (existingUser) {
+      throw new ConflictException('Email already in use!');
+    }
+
+    const hashedPassword = await this.hashPassword(registerDto.password);
+
+    const savedUser = await this.usersService.create({
+      email: registerDto.email,
+      name: registerDto.name,
+      password: hashedPassword,
+      role: Role.ADMIN,
+    });
+
+    const { password, ...result } = savedUser;
+    return {
+      user: result,
+      message: 'Admin created successfully.',
+    };
   }
 
   // ─── Private Helpers ─────────────────────────────────────────

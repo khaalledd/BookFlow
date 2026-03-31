@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength, IsEnum, IsOptional } from 'class-validator';
+import { Role } from '../../users/entities/user.entity';
 
 export class RegisterDto {
   @IsEmail({}, { message: 'Please provide a valid email' })
@@ -13,4 +14,8 @@ export class RegisterDto {
   @IsNotEmpty()
   @MinLength(6)
   password: string;
+
+  @IsOptional()
+  @IsEnum([Role.ATTENDEE, Role.ORGANIZER], { message: 'Role must be either ATTENDEE or ORGANIZER' })
+  role?: Role.ATTENDEE | Role.ORGANIZER;
 }

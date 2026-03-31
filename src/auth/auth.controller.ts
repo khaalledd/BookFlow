@@ -11,6 +11,9 @@ import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { LoginThrottlerGuard } from '../common/guards/login-throttler.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -36,5 +39,12 @@ export class AuthController {
   @Post('refresh')
   refreshToken(@Body('refreshToken') refreshToken: string) {
     return this.authService.refreshToken(refreshToken);
+  }
+
+  @Post('create-admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  createAdmin(@Body() registerDto: RegisterDto) {
+    return this.authService.createAdmin(registerDto);
   }
 }

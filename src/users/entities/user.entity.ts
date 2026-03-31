@@ -33,6 +33,9 @@ export class User {
   })
   role: Role;
 
+  @Column({ nullable: true })
+  avatarUrl: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

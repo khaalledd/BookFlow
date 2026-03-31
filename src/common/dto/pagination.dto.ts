@@ -1,6 +1,6 @@
 import { IsOptional, IsInt, Min, Max, IsString, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-import { EventCategory } from '../../events/entities/event.entity';
+import { EventCategory, EventStatus } from '../../events/entities/event.entity';
 
 export class PaginationDto {
   @IsOptional()
@@ -23,4 +23,8 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   city?: string;
+
+  @IsOptional()
+  @IsEnum(EventStatus)
+  status?: EventStatus;
 }
