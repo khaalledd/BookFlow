@@ -6,9 +6,10 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
-import { Role } from '../users/entities/user.entity';
+import { Role } from '@prisma/client';
 import { UsersService } from '../users/users.service';
-import { EventsService } from '../events/events.service';
+import { BusinessesService } from '../businesses/businesses.service';
+import { ServicesService } from '../services/services.service';
 
 @Controller('uploads')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -16,9 +17,10 @@ export class UploadsController {
   constructor(
     private readonly uploadsService: UploadsService,
     private readonly usersService: UsersService,
-    private readonly eventsService: EventsService,
+    private readonly businessesService: BusinessesService,
+    private readonly servicesService: ServicesService,
     private readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   @Post('avatar')
   @UseInterceptors(FileInterceptor('file'))
@@ -27,7 +29,7 @@ export class UploadsController {
     @CurrentUser() user: any,
   ) {
     if (!file) throw new BadRequestException('File is required');
-    const url = await this.uploadsService.uploadImage(file, 'Seatly');
+    const url = await this.uploadsService.uploadImage(file, 'bookflow/avatars');
     await this.usersService.updateAvatarUrl(user.id, url);
 
     this.eventEmitter.emit('upload.completed', { url, type: 'avatar', userId: user.id });
@@ -35,20 +37,38 @@ export class UploadsController {
     return { url };
   }
 
-  @Post('event-cover')
-  @Roles(Role.ORGANIZER, Role.ADMIN)
+  @Post('business-logo')
+  @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
   @UseInterceptors(FileInterceptor('file'))
-  async uploadEventCover(
+  async uploadBusinessLogo(
     @UploadedFile() file: Express.Multer.File,
-    @Body('eventId') eventId: string,
+    @Body('businessId') businessId: string,
   ) {
     if (!file) throw new BadRequestException('File is required');
-    if (!eventId) throw new BadRequestException('eventId is required in body');
+    if (!businessId) throw new BadRequestException('businessId is required in body');
 
-    const url = await this.uploadsService.uploadImage(file, 'event_covers');
-    await this.eventsService.updateCoverUrl(eventId, url);
+    const url = await this.uploadsService.uploadImage(file, 'bookflow/business-logos');
+    await this.businessesService.updateLogoUrl(businessId, url);
 
-    this.eventEmitter.emit('upload.completed', { url, type: 'event-cover', eventId });
+    this.eventEmitter.emit('upload.completed', { url, type: 'business-logo', businessId });
+
+    return { url };
+  }
+
+  @Post('service-cover')
+  @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadServiceCover(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('serviceId') serviceId: string,
+  ) {
+    if (!file) throw new BadRequestException('File is required');
+    if (!serviceId) throw new BadRequestException('serviceId is required in body');
+
+    const url = await this.uploadsService.uploadImage(file, 'bookflow/service-covers');
+    await this.servicesService.updateCoverUrl(serviceId, url);
+
+    this.eventEmitter.emit('upload.completed', { url, type: 'service-cover', serviceId });
 
     return { url };
   }

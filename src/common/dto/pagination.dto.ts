@@ -1,6 +1,14 @@
-import { IsOptional, IsInt, Min, Max, IsString, IsEnum } from 'class-validator';
+import {
+  IsOptional,
+  IsInt,
+  Min,
+  Max,
+  IsString,
+  IsEnum,
+  Matches,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { EventCategory, EventStatus } from '../../events/entities/event.entity';
+import { BusinessCategory } from '@prisma/client';
 
 export class PaginationDto {
   @IsOptional()
@@ -17,14 +25,14 @@ export class PaginationDto {
   limit?: number = 10;
 
   @IsOptional()
-  @IsEnum(EventCategory)
-  category?: EventCategory;
+  @IsEnum(BusinessCategory)
+  category?: BusinessCategory;
 
   @IsOptional()
   @IsString()
   city?: string;
 
   @IsOptional()
-  @IsEnum(EventStatus)
-  status?: EventStatus;
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  date?: string;
 }
