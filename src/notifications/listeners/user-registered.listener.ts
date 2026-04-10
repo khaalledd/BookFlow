@@ -3,10 +3,10 @@ import { OnEvent } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UserRegisteredListener {
-  private readonly logger = new Logger('Notification:UserRegistered');
+  private readonly logger = new Logger(UserRegisteredListener.name);
 
   @OnEvent('user.registered')
-  handleUserRegisteredEvent(payload: { email: string }) {
-    this.logger.log(`Welcome email sent to ${payload.email}`);
+  handleUserRegistered(payload: { email: string }) {
+    this.logger.log(`[BookFlow] Welcome email queued for: ${payload.email}`);
   }
 }

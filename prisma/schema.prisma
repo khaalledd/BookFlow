@@ -1,0 +1,146 @@
+// ─── BookFlow Prisma Schema ──────────────────────────────────────────────────
+// Booking & Scheduling SaaS for Service Businesses
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  BUSINESS_OWNER
+  CUSTOMER
+}
+
+enum BusinessCategory {
+  BARBERSHOP
+  SALON
+  GYM
+  FOOTBALL_PITCH
+  TUTORING
+  YOGA_STUDIO
+  OTHER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  phone     String?
+  role      Role     @default(CUSTOMER)
+  avatarUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businesses Business[]
+  bookings   Booking[]
+
+  @@map("users")
+}
+
+model Business {
+  id          String           @id @default(uuid())
+  name        String
+  slug        String           @unique
+  description String?
+  category    BusinessCategory @default(OTHER)
+  city        String
+  address     String
+  phone       String
+  logoUrl     String?
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  services       Service[]
+  availabilities Availability[]
+  bookings       Booking[]
+
+  @@index([category])
+  @@index([city])
+  @@index([ownerId])
+  @@map("businesses")
+}
+
+model Service {
+  id              String  @id @default(uuid())
+  name            String
+  description     String?
+  durationMinutes Int
+  price           Decimal @db.Decimal(10, 2)
+  currency        String  @default("EGP")
+  isActive        Boolean @default(true)
+  coverUrl        String?
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@index([businessId])
+  @@map("services")
+}
+
+model Availability {
+  id        String @id @default(uuid())
+  dayOfWeek Int // 0=Sunday, 1=Monday, ..., 6=Saturday
+  startTime String // HH:mm format e.g. "09:00"
+  endTime   String // HH:mm format e.g. "21:00"
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([businessId, dayOfWeek])
+  @@index([businessId])
+  @@map("availabilities")
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  date      DateTime      @db.Date
+  startTime String // HH:mm format
+  endTime   String // HH:mm format (auto-calculated)
+  status    BookingStatus @default(CONFIRMED)
+  notes     String?
+
+  serviceId  String
+  service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  customerId String
+  customer   User     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([businessId, date])
+  @@index([customerId])
+  @@index([serviceId])
+  @@map("bookings")
+}
