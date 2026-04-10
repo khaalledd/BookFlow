@@ -7,7 +7,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { User, Role } from '../users/entities/user.entity';
+import { Role } from '@prisma/client';
+import type { User } from '@prisma/client';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -19,7 +20,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   // ─── Registration ────────────────────────────────────────────
   async register(registerDto: RegisterDto) {
@@ -35,7 +36,8 @@ export class AuthService {
       email: registerDto.email,
       name: registerDto.name,
       password: hashedPassword,
-      role: registerDto.role || Role.ATTENDEE,
+      phone: registerDto.phone,
+      role: registerDto.role || Role.CUSTOMER,
     });
 
     const { password, ...result } = savedUser;
