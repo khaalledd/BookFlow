@@ -1,0 +1,213 @@
+:root {
+/* gainsboro */
+--gainsboro-100: #e5e7eb;
+/* darkgray */
+--darkgray-100: #9ca3af;
+--darkgray-200: rgba(156,163,175,.1);
+--darkgray-300: rgba(156,163,175,.05);
+--darkgray-400: rgba(156,163,175,.2);
+/* white */
+--white-100: #fff;
+--white-200: hsla(0,0%,100%,.1);
+--white-300: hsla(0,0%,100%,.05);
+--white-400: hsla(0,0%,100%,.2);
+--white-500: hsla(0,0%,100%,.25);
+--white-600: hsla(0,0%,100%,.6);
+--white-700: hsla(0,0%,100%,0);
+--white-800: hsla(0,0%,100%,.5);
+--white-900: hsla(0,0%,100%,.3);
+--white-1000: hsla(0,0%,100%,.7);
+--white-1100: hsla(0,0%,100%,.75);
+/* slategray */
+--slategray-100: #6b7280;
+--slategray-200: hsla(220,9%,46%,.1);
+--slategray-300: hsla(220,9%,46%,.25);
+--slategray-400: hsla(220,9%,46%,.2);
+/* royalblue */
+--royalblue-100: #2563eb;
+--royalblue-200: rgb(112,132,248);
+--royalblue-300: rgba(29,78,216,.5);
+--royalblue-400: rgba(29,78,216,.1);
+--royalblue-500: rgba(37,99,235,.2);
+--royalblue-600: rgba(29,78,216,.75);
+/* cornflowerblue */
+--cornflowerblue-100: #1d9bf0;
+--cornflowerblue-200: #60a5fa;
+--cornflowerblue-300: rgb(148,150,252);
+--cornflowerblue-400: rgb(164,164,252);
+--cornflowerblue-500: rgb(156,164,252);
+--cornflowerblue-600: rgba(96,165,250,.1);
+--cornflowerblue-700: rgba(96,165,250,.3);
+/* black */
+--black-100: #24292f;
+--black-200: #000;
+--black-300: #1f2937;
+--black-400: #111827;
+--black-500: rgb(4,5,21);
+--black-600: rgba(17,24,39,.1);
+--black-700: rgba(17,24,39,.05);
+--black-800: rgba(17,24,39,.25);
+--black-900: rgba(0,0,0,.1);
+--black-1000: rgba(31,41,55,.4);
+--black-1100: rgba(31,41,55,.8);
+--black-1200: rgba(17,24,39,.8);
+--black-1300: rgba(17,24,39,.9);
+--black-1400: rgba(31,41,55,0);
+--black-1500: rgba(17,24,39,0);
+--black-1600: rgba(17,24,39,.4);
+--black-1700: rgba(31,41,55,.2);
+--black-1800: rgba(0,0,0,.25);
+--black-1900: rgba(0,0,0,.05);
+--black-2000: rgba(0,0,0,.03);
+--black-2100: rgba(0,0,0,.08);
+--black-2200: rgba(17,24,39,.2);
+/* lavender */
+--lavender-100: #e0e7ff;
+--lavender-200: rgba(224,231,255,.2);
+--lavender-300: rgba(224,231,255,0);
+/* lightskyblue */
+--lightskyblue-100: #80caff;
+--lightskyblue-200: rgba(128,202,255,0);
+/* hotpink */
+--hotpink-100: #ff80b5;
+--hotpink-200: #f472b6;
+--hotpink-300: #ec4899;
+--hotpink-400: rgba(244,114,182,.1);
+--hotpink-500: rgba(255,128,181,0);
+--hotpink-600: rgba(244,114,182,.2);
+/* deeppink */
+--deeppink-100: #ff4694;
+--deeppink-200: rgba(255,70,148,0);
+/* mediumslateblue */
+--mediumslateblue-100: #8b5cf6;
+--mediumslateblue-200: #776fff;
+--mediumslateblue-300: #6366f1;
+--mediumslateblue-400: rgb(100,100,244);
+--mediumslateblue-500: rgba(99,102,241,.1);
+--mediumslateblue-600: rgba(139,92,246,0);
+--mediumslateblue-700: rgba(99,102,241,.2);
+/* aliceblue */
+--aliceblue-100: #eff6ff;
+--aliceblue-200: rgba(239,246,255,0);
+/* blueviolet */
+--blueviolet-100: #4f46e5;
+--blueviolet-200: rgba(79,70,229,.1);
+--blueviolet-300: rgba(79,70,229,.5);
+--blueviolet-400: rgba(124,58,237,.5);
+--blueviolet-500: rgba(109,40,217,.5);
+--blueviolet-600: rgba(126,34,206,.1);
+--blueviolet-700: rgba(79,70,229,.2);
+--blueviolet-800: rgba(147,51,234,.2);
+--blueviolet-900: rgba(79,70,229,.75);
+--blueviolet-1000: rgba(124,58,237,.75);
+--blueviolet-1100: rgba(109,40,217,.75);
+/* mediumpurple */
+--mediumpurple-100: #9089fc;
+--mediumpurple-200: #818cf8;
+--mediumpurple-300: #c084fc;
+--mediumpurple-400: rgba(129,140,248,.1);
+--mediumpurple-500: rgba(192,132,252,.1);
+--mediumpurple-600: rgba(129,140,248,.3);
+--mediumpurple-700: rgba(192,132,252,.3);
+/* dodgerblue */
+--dodgerblue-100: #3b82f6;
+--dodgerblue-200: rgba(59,130,246,.5);
+/* lightgray */
+--lightgray-100: #d1d5db;
+/* whitesmoke */
+--whitesmoke-100: #f9fafb;
+--whitesmoke-200: #f3f4f6;
+--whitesmoke-300: rgba(243,244,246,.1);
+/* mediumspringgreen */
+--mediumspringgreen-100: #4ade80;
+--mediumspringgreen-200: #22c55e;
+--mediumspringgreen-300: rgba(74,222,128,.1);
+--mediumspringgreen-400: rgba(34,197,94,.1);
+--mediumspringgreen-500: rgba(34,197,94,.2);
+/* darkorchid */
+--darkorchid-100: #a855f7;
+/* salmon */
+--salmon-100: #f87171;
+--salmon-200: hsla(0,91%,71%,.1);
+--salmon-300: hsla(0,91%,71%,.2);
+/* crimson */
+--crimson-100: #ef4444;
+--crimson-200: rgba(220,38,38,.5);
+--crimson-300: rgba(220,38,38,.1);
+--crimson-400: rgba(220,38,38,.2);
+--crimson-500: rgba(220,38,38,.75);
+
+/* darkslategray */
+--darkslategray-100: #374151;
+--darkslategray-200: rgb(60,68,78);
+--darkslategray-300: rgba(55,65,81,.1);
+--darkslategray-400: rgba(55,65,81,.4);
+--darkslategray-500: rgba(55,65,81,.5);
+--darkslategray-600: rgba(55,65,81,.75);
+/* mintcream */
+--mintcream-100: #f0fdf4;
+/* lightsteelblue */
+--lightsteelblue-100: rgb(186,188,252);
+--lightsteelblue-200: rgb(185,183,218);
+/* dimgray */
+--dimgray-100: rgb(85,91,104);
+--dimgray-200: rgba(75,85,99,.1);
+--dimgray-300: rgba(75,85,99,.5);
+--dimgray-400: rgba(75,85,99,.75);
+/* slateblue */
+--slateblue-100: rgb(99,98,221);
+--slateblue-200: rgba(30,64,175,.5);
+--slateblue-300: rgba(30,64,175,.75);
+/* lightslategray */
+--lightslategray-100: rgb(124,132,156);
+/* mediumseagreen */
+--mediumseagreen-100: rgba(16,185,129,.2);
+/* lightcoral */
+--lightcoral-100: rgba(251,113,133,.1);
+/* seagreen */
+--seagreen-100: rgba(21,128,61,.5);
+--seagreen-200: rgba(22,101,52,.5);
+--seagreen-300: rgba(21,128,61,.75);
+--seagreen-400: rgba(22,101,52,.75);
+/* darkblue */
+--darkblue-100: rgba(67,56,202,.5);
+--darkblue-200: rgba(67,56,202,.1);
+--darkblue-300: rgba(67,56,202,.75);
+/* mediumvioletred */
+--mediumvioletred-100: rgba(190,24,93,.5);
+--mediumvioletred-200: rgba(157,23,77,.5);
+--mediumvioletred-300: rgba(190,24,93,.1);
+--mediumvioletred-400: rgba(219,39,119,.2);
+--mediumvioletred-500: rgba(190,24,93,.75);
+--mediumvioletred-600: rgba(157,23,77,.75);
+/* firebrick */
+--firebrick-100: rgba(185,28,28,.5);
+--firebrick-200: rgba(185,28,28,.75);
+/* peru */
+--peru-100: rgba(161,98,7,.5);
+--peru-200: rgba(161,98,7,.75);
+/* saddlebrown */
+--saddlebrown-100: rgba(133,77,14,.5);
+--saddlebrown-200: rgba(133,77,14,.75);
+/* forestgreen */
+--forestgreen-100: rgba(22,163,74,.2);
+/* darkgoldenrod */
+--darkgoldenrod-100: rgba(202,138,4,.2);
+/* Logo Colors */
+--lightsteelblue: rgb(186, 188, 252);
+--mediumslateblue: rgb(100, 100, 244);
+--cornflowerblue: rgb(148, 150, 252);
+--cornflowerblue: rgb(164, 164, 252);
+--cornflowerblue: rgb(156, 164, 252);
+--royalblue: rgb(112, 132, 248);
+/* Homepage Colors */
+--lightsteelblue: rgb(187, 186, 222);
+--black: rgb(4, 5, 21);
+--dimgray: rgb(84, 90, 103);
+--slateblue: rgb(100, 99, 215);
+--lightslategray: rgb(124, 132, 147);
+--darkslategray: rgb(45, 49, 62);
+--mediumslateblue: rgb(135, 92, 233);
+--darkslategray: rgb(60, 68, 82);
+--darkslateblue: rgb(46, 48, 95);
+}

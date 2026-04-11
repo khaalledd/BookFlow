@@ -1,4 +1,8 @@
-Seatly 
-- attende must not be able to create event or delete event
-- attende must not be able to create venue or delete venue
-- invalidate cahe after delete event 
+ Remove Price from service i think it's not important or making it optional ?
+
+check for businessId if not found return 404
+
+GET {{base_url}}/businesses/{{businessId}}/availability
+
+i need to make sure that the date is in the future
+{{base_url}}/businesses/f8fe793b-d94f-42ea-ae02-237025aa2396/slots?serviceId=c410e57b-58fd-416f-9f53-b64a56552d78&date=2026-03-06
