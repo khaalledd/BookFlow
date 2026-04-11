@@ -12,7 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2023",
     "sourceMap": true,
-    "outDir": "./dist3",
+    "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -22,5 +22,5 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
   },
-  "exclude": ["node_modules", "dist", "dist2", "dist3", "frontend", "test"]
+  "exclude": ["node_modules", "dist", "frontend", "test"]
 }
