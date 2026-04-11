@@ -41,10 +41,10 @@ How it works:
    - Installs backend dependencies from root `package*.json`
    - Copies Prisma schema folder
    - Runs `npx prisma generate`
-   - Runs `npm run build` (outputs to `dist3` in this project)
+   - Runs `npm run build` (outputs to `dist` in this project)
 
 2. **Production stage**
-   - Copies only needed runtime artifacts (`dist3`, `node_modules`, `prisma`, package files)
+   - Copies only needed runtime artifacts (`dist`, `node_modules`, `prisma`, package files)
    - Exposes port `3000`
    - Startup command:
 
@@ -54,7 +54,7 @@ if [ -d prisma/migrations ] && [ "$(ls -A prisma/migrations 2>/dev/null)" ]; the
 else
   npx prisma db push
 fi
-node dist3/src/main.js
+node dist/src/main.js
 ```
 
 Why this is good:
@@ -205,7 +205,7 @@ So we:
 
 - Kept backend Dockerfile at repo root (`Dockerfile.backend`)
 - Kept frontend Dockerfile inside existing `frontend/`
-- Kept current scripts and outputs (`dist3/src/main.js`)
+- Kept current scripts and outputs (`dist/src/main.js`)
 - Did not move code into `apps/` or change package architecture
 
 ---
@@ -341,7 +341,7 @@ You can run only what you need:
 
 ## Known notes for this repo
 
-1. Backend output currently uses `dist3/src/main.js` (consistent with current scripts).
+1. Backend output currently uses `dist/src/main.js` (consistent with current scripts).
 2. Cloudinary upload endpoints require valid Cloudinary credentials.
 3. If local Node processes are already bound to ports 3000/3001/5432/6379, stop them before compose run.
 4. If you previously saw Prisma error `P2021` (`public.users` does not exist), this fallback now addresses it automatically on container startup.
