@@ -10,7 +10,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { CreatePublicBookingDto } from './dto/create-public-booking.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import * as bcrypt from 'bcrypt';
 import type { Booking } from '@prisma/client';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/types/paginated.type';
@@ -29,33 +28,40 @@ export class BookingsService {
   ): Promise<Booking> {
     const { name, email, phone, ...bookingData } = createPublicBookingDto;
 
-    // Find or create customer
-    let customer = await this.prisma.user.findUnique({ where: { email } });
-
-    if (!customer) {
-      const hashedPassword = await bcrypt.hash(
-        Math.random().toString(36).slice(-8),
-        10,
-      );
-      customer = await this.prisma.user.create({
-        data: {
-          email,
-          name,
-          phone,
-          password: hashedPassword,
-          role: 'CUSTOMER',
-        },
-      });
-      this.eventEmitter.emit('user.registered', { email: customer.email });
-    }
-
-    return this.create(customer.id, bookingData);
+    return this.createInternal({
+      createBookingDto: bookingData,
+      guestName: name,
+      guestEmail: email,
+      guestPhone: phone,
+    });
   }
 
   async create(
     customerId: string,
     createBookingDto: CreateBookingDto,
   ): Promise<Booking> {
+    return this.createInternal({ createBookingDto, customerId });
+  }
+
+  private async createInternal({
+    createBookingDto,
+    customerId,
+    guestName,
+    guestEmail,
+    guestPhone,
+  }: {
+    createBookingDto: CreateBookingDto;
+    customerId?: string;
+    guestName?: string;
+    guestEmail?: string;
+    guestPhone?: string;
+  }): Promise<Booking> {
+    if (!customerId && (!guestName || !guestEmail || !guestPhone)) {
+      throw new BadRequestException(
+        'Either customerId or guest details must be provided',
+      );
+    }
+
     const {
       businessId,
       serviceId,
@@ -154,6 +160,9 @@ export class BookingsService {
           businessId,
           serviceId,
           customerId,
+          guestName,
+          guestEmail,
+          guestPhone,
           date: dateObj,
           startTime,
           endTime,
@@ -170,7 +179,7 @@ export class BookingsService {
       // 5. Fire event
       this.eventEmitter.emit('booking.created', {
         bookingId: booking.id,
-        customerEmail: booking.customer.email,
+        customerEmail: booking.customer?.email || guestEmail,
         businessName: booking.business.name,
         serviceName: booking.service.name,
         date: dateString,

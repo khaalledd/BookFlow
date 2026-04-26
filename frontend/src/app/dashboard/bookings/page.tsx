@@ -21,6 +21,9 @@ interface Booking {
   endTime: string;
   status: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
   notes?: string;
+  guestName?: string;
+  guestEmail?: string;
+  guestPhone?: string;
   customer: {
     id: string;
     name: string;
@@ -188,13 +191,21 @@ export default function BookingsPage() {
 
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <User size={14} />
-                        <span>{booking.customer.name}</span>
+                        <span>
+                          {booking.customer?.name ||
+                            booking.guestName ||
+                            'Guest'}
+                        </span>
                         <span className="text-white/30">|</span>
-                        <span>{booking.customer.email}</span>
-                        {booking.customer.phone && (
+                        <span>
+                          {booking.customer?.email || booking.guestEmail}
+                        </span>
+                        {(booking.customer?.phone || booking.guestPhone) && (
                           <>
                             <span className="text-white/30">|</span>
-                            <span>{booking.customer.phone}</span>
+                            <span>
+                              {booking.customer?.phone || booking.guestPhone}
+                            </span>
                           </>
                         )}
                       </div>
