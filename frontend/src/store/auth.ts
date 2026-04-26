@@ -107,10 +107,12 @@ export function useAuth() {
   const store = useAuthStore();
   const [mounted, setMounted] = useState(false);
 
+  const hydrate = useAuthStore((state) => state.hydrate);
+
   useEffect(() => {
-    store.hydrate();
+    hydrate();
     setMounted(true);
-  }, []);
+  }, [hydrate]);
 
   // Return default values during SSR/initial render to prevent hydration mismatch
   if (!mounted) {

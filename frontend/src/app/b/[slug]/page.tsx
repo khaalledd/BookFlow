@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 export default function ServicesBookingPage() {
   return (
@@ -84,11 +85,11 @@ export default function ServicesBookingPage() {
               {/* Service Card 1 */}
               <div className="bg-surface-container-lowest/60 backdrop-blur-[20px] rounded-2xl overflow-hidden border border-secondary-fixed/40 shadow-lg shadow-primary/5 flex flex-col transition-all duration-300 hover:shadow-primary/10 hover:border-primary/30 group">
                 <div className="h-48 w-full bg-surface-container relative overflow-hidden">
-                  <img
+                  <Image fill
                     alt="massage"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuL0Iahoeqqi0cITC_Y823ToYxaLX6EPevrfR1BbHoKYY_YUqEeIMJDHPNx0dGHk8LzrbioMA_g2NCwxZFSJRr0AFBO6HPIQwDfiJ9QcMld4ltxrBnmbt2oAJvGiw0INhSnD3EQUjMZhyCdwk5b_RVvrgPo4hhTnc0w2qPdlpCqvflOyrBygk1-J6BfEKvTqvoht0QIYX_LOjRQ3UveT1H2J9WT_ijhOVjCgeKHAAli_gMAgmrO8Z3WAJ-t8kRXQdWDS1Pbzt7Tkq7"
-                  />
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 to-transparent"></div>
                 </div>
                 <div className="p-lg flex flex-col flex-grow">
@@ -121,11 +122,11 @@ export default function ServicesBookingPage() {
               {/* Service Card 2 */}
               <div className="bg-surface-container-lowest/60 backdrop-blur-[20px] rounded-2xl overflow-hidden border border-secondary-fixed/40 shadow-lg shadow-primary/5 flex flex-col transition-all duration-300 hover:shadow-primary/10 hover:border-primary/30 group">
                 <div className="h-48 w-full bg-surface-container relative overflow-hidden">
-                  <img
+                  <Image fill
                     alt="facial"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8Q_X1bT4jE2gTpZ_mg6cRR6fXzObr2cKAeRmjp3_DDZClcpBTO9MU_TE8XB-AdDw5BpsfZq9kHiHEU-YYjlTZnRsEhcblAzQtjPaFsaHaEZZeOphk9C6HDELG9mTdrTbYnLvlmjMKNe1-Vmw1W4-h_7xCk-gnxeaJqMxVwGNWsR9UjwKkdIC02jR3jS-VR8J7fdzk7fnmOes-C9TlcPhh5GBLq2lwtHjWFTNf5cDR6ucO7y-JcA8uwYZ0WQFhoCNm217VBt0BncQS"
-                  />
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 to-transparent"></div>
                 </div>
                 <div className="p-lg flex flex-col flex-grow">
