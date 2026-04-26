@@ -5,15 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/store/auth';
 import { api } from '@/lib/api';
 import { useEffect, useRef, useState } from 'react';
-import {
-  Store,
-  Calendar,
-  Clock,
-  LogOut,
-  Scissors,
-  LayoutDashboard,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export default function DashboardLayout({
   children,
@@ -27,7 +18,6 @@ export default function DashboardLayout({
   const meFetchedRef = useRef(false);
 
   useEffect(() => {
-    // Wait for hydration before checking auth
     if (!isHydrated) return;
 
     if (
@@ -53,7 +43,6 @@ export default function DashboardLayout({
     }
   }, [isHydrated, isAuthenticated, user, router, setUser]);
 
-  // Show loading while hydrating or checking auth
   if (!isHydrated || !checked) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -63,69 +52,98 @@ export default function DashboardLayout({
   }
 
   const links = [
-    { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
-    { href: '/dashboard/business', label: 'My Business', icon: Store },
-    { href: '/dashboard/services', label: 'Services', icon: Scissors },
-    { href: '/dashboard/availability', label: 'Schedule', icon: Clock },
-    { href: '/dashboard/bookings', label: 'Bookings', icon: Calendar },
+    { href: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
+    {
+      href: '/dashboard/availability',
+      label: 'Calendar',
+      icon: 'calendar_month',
+    },
+    { href: '/dashboard/bookings', label: 'Customers', icon: 'group' },
+    { href: '/dashboard/services', label: 'Services', icon: 'inventory_2' },
+    { href: '/dashboard/business', label: 'Analytics', icon: 'insights' },
   ];
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar Navigation */}
-      <aside className="w-64 border-r border-white/10 bg-card/30 backdrop-blur-md flex flex-col p-4">
-        <div className="mb-8 px-2">
-          <h2 className="text-2xl font-heading font-semibold text-primary">
-            BookFlow
-          </h2>
-          <p className="text-xs text-muted-foreground mt-1">Owner Portal</p>
+    <div className="flex h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-colors-surface-container-highest),_transparent_50%)] overflow-hidden">
+      {/* SideNavBar Component */}
+      <aside className="flex flex-col h-full py-6 px-4 fixed left-0 top-0 w-64 rounded-r-2xl bg-white/40 backdrop-blur-2xl border-r border-[#35858E]/10 shadow-2xl shadow-[#35858E]/10 z-50 transition-all duration-200 ease-out">
+        {/* Header */}
+        <div className="flex items-center gap-3 px-2 mb-8">
+          <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-outline-variant/30">
+            <img
+              alt="Business Owner"
+              className="w-full h-full object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO0N69FtsBkCbiTZ0ftfa6e886BgpQ_jCL2VVBxdS-EcFDSaPwtPZtsBg62aYpcIHv-B_6MztyyONBdkcnP47tLWMuiwVnLmf_c7lRZmz-VlPk6nXMboj1E9uOI7r5firUn8gYvlS8yw1IQeHnopIPKHdt5YYTPk7iwICnHrSBqHdZiJgIntePfHFKZTtQlyj1AMvzPz8zlUqexSlSMAFxAlagdpsuEKTky6h7m6R2Qcy6hUX1cb7bVHkbZKjcq8w5VaorB9EhRXQ-"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold text-[#35858E] leading-tight">
+              Owner Portal
+            </span>
+            <span className="text-sm font-medium text-slate-500 leading-tight">
+              Manage Bookings
+            </span>
+          </div>
         </div>
 
-        <nav className="flex-1 space-y-2">
+        {/* CTA */}
+        <div className="px-2 mb-6">
+          <button className="w-full bg-gradient-to-r from-primary to-surface-tint hover:opacity-90 text-on-primary font-button text-button py-3 px-4 rounded-xl shadow-[0_4px_12px_rgba(0,102,111,0.2)] transition-all flex items-center justify-center gap-2">
+            <span className="material-symbols-outlined text-[18px]">add</span>
+            New Appointment
+          </button>
+        </div>
+
+        {/* Main Navigation */}
+        <nav className="flex-1 flex flex-col gap-1 overflow-y-auto">
           {links.map((link) => {
-            const Icon = link.icon;
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
+                className={
                   isActive
-                    ? 'bg-primary/20 text-primary font-medium'
-                    : 'text-muted-foreground hover:bg-white/5 hover:text-white'
-                }`}
+                    ? 'flex items-center gap-3 px-3 py-2.5 bg-[#35858E]/10 text-[#35858E] rounded-lg text-sm font-medium transition-all duration-200 ease-out'
+                    : 'flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-[#35858E]/5 rounded-lg text-sm font-medium transition-all duration-200 ease-out'
+                }
               >
-                <Icon size={18} />
+                <span
+                  className={`material-symbols-outlined ${isActive ? 'fill' : ''}`}
+                >
+                  {link.icon}
+                </span>
                 {link.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="mt-auto border-t border-white/10 pt-4">
-          <div className="mb-4 px-2">
-            <p className="text-sm font-medium">{user?.name}</p>
-            <p className="text-xs text-muted-foreground truncate">
-              {user?.email}
-            </p>
-          </div>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-muted-foreground hover:text-destructive"
+        {/* Footer Navigation */}
+        <div className="mt-auto pt-4 border-t border-[#35858E]/10 flex flex-col gap-1">
+          <Link
+            href="#"
+            className="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-[#35858E]/5 rounded-lg text-sm font-medium transition-all duration-200 ease-out"
+          >
+            <span className="material-symbols-outlined">settings</span>
+            Settings
+          </Link>
+          <button
             onClick={() => {
               logout();
               router.push('/login');
             }}
+            className="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-error-container hover:text-error rounded-lg text-sm font-medium transition-all duration-200 ease-out"
           >
-            <LogOut size={18} className="mr-2" />
+            <span className="material-symbols-outlined">logout</span>
             Logout
-          </Button>
+          </button>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 p-8 bg-black/40">
-        <div className="max-w-5xl mx-auto">{children}</div>
+      {/* Main Content Canvas */}
+      <main className="flex-1 ml-64 overflow-y-auto">
+        <div className="p-xl max-w-max-width mx-auto">{children}</div>
       </main>
     </div>
   );

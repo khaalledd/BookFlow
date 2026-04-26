@@ -6,60 +6,43 @@
   :root {
     --background: 222 38% 7%;
     --foreground: 226 62% 93%;
-
     --card: 221 33% 11%;
     --card-foreground: 226 62% 93%;
-
     --popover: 221 33% 11%;
     --popover-foreground: 226 62% 93%;
-
     --primary: 195 89% 64%;
     --primary-foreground: 200 100% 11%;
-
     --secondary: 224 17% 70%;
     --secondary-foreground: 223 31% 17%;
-
     --muted: 223 31% 17%;
     --muted-foreground: 224 17% 70%;
-
     --accent: 180 100% 41%;
     --accent-foreground: 183 100% 11%;
-
     --destructive: 3 100% 64%;
     --destructive-foreground: 226 62% 93%;
-
     --border: 223 15% 30%;
     --input: 223 15% 30%;
     --ring: 181 89% 64%;
-
     --radius: 0.375rem;
   }
 
   .dark {
     --background: 222 38% 7%;
     --foreground: 226 62% 93%;
-
     --card: 221 33% 11%;
     --card-foreground: 226 62% 93%;
-
     --popover: 221 33% 11%;
     --popover-foreground: 226 62% 93%;
-
     --primary: 195 89% 64%;
     --primary-foreground: 200 100% 11%;
-
     --secondary: 224 17% 70%;
     --secondary-foreground: 223 31% 17%;
-
     --muted: 223 31% 17%;
     --muted-foreground: 224 17% 70%;
-
     --accent: 180 100% 41%;
     --accent-foreground: 183 100% 11%;
-
     --destructive: 3 100% 64%;
     --destructive-foreground: 226 62% 93%;
-
     --border: 223 15% 30%;
     --input: 223 15% 30%;
     --ring: 181 89% 64%;
@@ -70,21 +53,60 @@
   * {
     @apply border-border;
   }
+}
 
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings:
-      'rlig' 1,
-      'calt' 1;
-    color-scheme: dark;
-    background-image:
-      radial-gradient(circle at 15% 0%,
-        rgba(82, 242, 245, 0.12),
-        transparent 38%),
-      radial-gradient(circle at 85% 20%,
-        rgba(0, 206, 209, 0.1),
-        transparent 36%),
-      linear-gradient(180deg, #0c1322 0%, #080e1c 100%);
-    background-attachment: fixed;
-  }
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(190, 234, 204, 0.3); /* Lime Mist / secondary-container tint */
+  box-shadow: 0 10px 30px -10px rgba(53, 133, 142, 0.1);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    theme('colors.primary'),
+    theme('colors.primary-container')
+  );
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
