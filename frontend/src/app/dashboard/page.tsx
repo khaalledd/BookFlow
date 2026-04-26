@@ -8,7 +8,7 @@ export default function DashboardOverview() {
         <div>
           <h1 className="font-h1 text-h1 text-on-surface mb-xs">Overview</h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant">
-            Here is what's happening with your business today.
+            Here is what&apos;s happening with your business today.
           </p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-white/50 backdrop-blur-[10px] rounded-full border border-outline-variant/30 text-primary font-label-sm text-label-sm shadow-sm">
@@ -165,7 +165,8 @@ export default function DashboardOverview() {
                   </span>
                 </div>
                 <p className="text-[14px] text-on-surface truncate font-medium">
-                  Replied to your story: "Looks amazing! How much for..."
+                  Replied to your story: &quot;Looks amazing! How much
+                  for...&quot;
                 </p>
               </div>
             </div>

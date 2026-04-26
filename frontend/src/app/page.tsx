@@ -123,21 +123,24 @@ export default function LandingPage() {
             </span>
             End the DM madness
           </div>
-          <h1 className="reveal-base font-h1 text-h1 text-on-background max-w-3xl">
-            Stop managing bookings in <br />
-            <span className="text-gradient">WhatsApp &amp; Instagram.</span>
+          <h1 className="reveal-base font-h1 text-h1 sm:text-5xl md:text-6xl text-on-background max-w-3xl leading-tight">
+            Stop managing bookings <br />
+            <span className="text-gradient">in Social chaos.</span>
           </h1>
           <p className="reveal-base font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-            Consolidate your chaotic social media messages into one elegant,
-            professional scheduling hub. Regain your time and present a premium
-            experience to your clients.
+            Move your clients from DMs to a beautifully structured booking
+            experience. Scheduly brings deep calm to your daily schedule,
+            eliminating back-and-forth messaging for good.
           </p>
           <div className="reveal-base flex flex-col sm:flex-row items-center gap-4 pt-4">
             <Link
               href="/register"
-              className="font-button text-button bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-full shadow-lg shadow-primary/20 hover:shadow-[0_0_25px_rgba(190,234,204,0.8)] hover:scale-105 active:scale-95 transition-all duration-300 w-full sm:w-auto"
+              className="bg-gradient-to-r from-primary to-surface-tint text-on-primary font-button text-button px-8 py-4 rounded-full hover:shadow-[0_0_25px_rgba(163,239,249,0.5)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 w-full sm:w-auto justify-center duration-300"
             >
-              Claim Your Booking Link
+              Claim your free page
+              <span className="material-symbols-outlined text-xl">
+                arrow_forward
+              </span>
             </Link>
             <a
               href="#features"
@@ -145,6 +148,28 @@ export default function LandingPage() {
             >
               See How It Works
             </a>
+          </div>
+
+          <div className="reveal-base mt-16 flex items-center gap-6 text-on-surface-variant/60 font-label-sm text-label-sm">
+            <span>Trusted by 10,000+ professionals</span>
+            <div className="h-4 w-px bg-outline-variant/30"></div>
+            <div className="flex -space-x-3">
+              <img
+                alt="User avatar"
+                className="w-8 h-8 rounded-full border-2 border-background"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMF7zypZzBd2df_vTvxwD2PeqSUl88EG-AZu_S91gkhl8NSFk92b4DuKyTg4UbTN2elFjod_gynS7R8B5Gc0VwcS08EN7QfPTaXqyRa-dHJRxOJQccPvClHYveSyVlY9AAFF2bXZ7jz3nllHWLVYn5JdpRCyAn-sWhkjaUrvTy9nTZ8rm6OuXRfoz5A5lWG0aNctMh8SRjpZ-QmLo_XqQqLzW1Wo6rRO_RB1-z0Vk_W9TY5dpjfErkGwxYS04jlI_qD7mXAzGrpXb3"
+              />
+              <img
+                alt="User avatar"
+                className="w-8 h-8 rounded-full border-2 border-background"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAveCI-qU-zew_0OW8XPch6h1toAOVLGMfKk9CVLJym6ApL4DiNgTEpWGibfSLwcKK6NTGLd_4C6O-nlmA3Hk1iZLnrt2-Fq1BdFKjBRYaLk-7-GP_9eBfO_dW7-Vu3hU_rQLiWBmAe6swQQ5qgp3pwHe5XM2cq9mKqj2FNTV_EuPtf3IbAoAr6BgtJeTbJfDUw3Y-2yu2CUrOuSr244KB4Em2v8-SufUDiiqRsPEZ1SmmBOiUYnN74dAkFLpw0orBj9a7Uz6O0ZXHE"
+              />
+              <img
+                alt="User avatar"
+                className="w-8 h-8 rounded-full border-2 border-background"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTl5Gwa6G-QkMFuRTaObiRNVxeainsg7YVE3yP-ad0JavC1myfXrCAFLqh7gfWKnz2VjViknkVwKRGwSLEr1ZK-Gf2vcKQ6z9M9nCXx7KzsOZn6T_8oKJtYwNNPUdwxC4YyvPfAe3XwyM4CfNZXLsrnv-ex7WAdteEKtEekLnPskN2hfeESLCcY785N2bd23hjynJn4buae0fmlxy-g-aj461PjSoV8OaZbxiw1t4ASE2I1VqV0WrpTfrRNkUbvAjZb7hUk9Badigg"
+              />
+            </div>
           </div>
         </section>
 
@@ -180,7 +205,7 @@ export default function LandingPage() {
                     <span className="material-symbols-outlined text-error text-sm mt-1">
                       close
                     </span>
-                    Back-and-forth "when are you free?" texts.
+                    Back-and-forth &quot;when are you free?&quot; texts.
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="material-symbols-outlined text-error text-sm mt-1">
