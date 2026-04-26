@@ -155,21 +155,21 @@ export default function LandingPage() {
             <span>Trusted by 10,000+ professionals</span>
             <div className="h-4 w-px bg-outline-variant/30"></div>
             <div className="flex -space-x-3">
-              <Image fill
+              <Image width={32} height={32}
                 alt="User avatar"
-                className="relative w-8 h-8 rounded-full border-2 border-background overflow-hidden"
+                className="w-8 h-8 rounded-full border-2 border-background object-cover"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMF7zypZzBd2df_vTvxwD2PeqSUl88EG-AZu_S91gkhl8NSFk92b4DuKyTg4UbTN2elFjod_gynS7R8B5Gc0VwcS08EN7QfPTaXqyRa-dHJRxOJQccPvClHYveSyVlY9AAFF2bXZ7jz3nllHWLVYn5JdpRCyAn-sWhkjaUrvTy9nTZ8rm6OuXRfoz5A5lWG0aNctMh8SRjpZ-QmLo_XqQqLzW1Wo6rRO_RB1-z0Vk_W9TY5dpjfErkGwxYS04jlI_qD7mXAzGrpXb3"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-              <Image fill
+               />
+              <Image width={32} height={32}
                 alt="User avatar"
-                className="relative w-8 h-8 rounded-full border-2 border-background overflow-hidden"
+                className="w-8 h-8 rounded-full border-2 border-background object-cover"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAveCI-qU-zew_0OW8XPch6h1toAOVLGMfKk9CVLJym6ApL4DiNgTEpWGibfSLwcKK6NTGLd_4C6O-nlmA3Hk1iZLnrt2-Fq1BdFKjBRYaLk-7-GP_9eBfO_dW7-Vu3hU_rQLiWBmAe6swQQ5qgp3pwHe5XM2cq9mKqj2FNTV_EuPtf3IbAoAr6BgtJeTbJfDUw3Y-2yu2CUrOuSr244KB4Em2v8-SufUDiiqRsPEZ1SmmBOiUYnN74dAkFLpw0orBj9a7Uz6O0ZXHE"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-              <Image fill
+               />
+              <Image width={32} height={32}
                 alt="User avatar"
-                className="relative w-8 h-8 rounded-full border-2 border-background overflow-hidden"
+                className="w-8 h-8 rounded-full border-2 border-background object-cover"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTl5Gwa6G-QkMFuRTaObiRNVxeainsg7YVE3yP-ad0JavC1myfXrCAFLqh7gfWKnz2VjViknkVwKRGwSLEr1ZK-Gf2vcKQ6z9M9nCXx7KzsOZn6T_8oKJtYwNNPUdwxC4YyvPfAe3XwyM4CfNZXLsrnv-ex7WAdteEKtEekLnPskN2hfeESLCcY785N2bd23hjynJn4buae0fmlxy-g-aj461PjSoV8OaZbxiw1t4ASE2I1VqV0WrpTfrRNkUbvAjZb7hUk9Badigg"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+               />
             </div>
           </div>
         </section>

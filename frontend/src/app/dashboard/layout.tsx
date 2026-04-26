@@ -71,11 +71,11 @@ export default function DashboardLayout({
         {/* Header */}
         <div className="flex items-center gap-3 px-2 mb-8">
           <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-outline-variant/30">
-            <Image fill
+            <Image width={40} height={40}
               alt="Business Owner"
               className="w-full h-full object-cover"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO0N69FtsBkCbiTZ0ftfa6e886BgpQ_jCL2VVBxdS-EcFDSaPwtPZtsBg62aYpcIHv-B_6MztyyONBdkcnP47tLWMuiwVnLmf_c7lRZmz-VlPk6nXMboj1E9uOI7r5firUn8gYvlS8yw1IQeHnopIPKHdt5YYTPk7iwICnHrSBqHdZiJgIntePfHFKZTtQlyj1AMvzPz8zlUqexSlSMAFxAlagdpsuEKTky6h7m6R2Qcy6hUX1cb7bVHkbZKjcq8w5VaorB9EhRXQ-"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-bold text-[#35858E] leading-tight">

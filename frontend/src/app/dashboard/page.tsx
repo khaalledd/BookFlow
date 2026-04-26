@@ -116,11 +116,11 @@ export default function DashboardOverview() {
             <div className="group flex items-start gap-4 p-4 rounded-lg hover:bg-surface-container-lowest/80 border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
               <div className="relative w-10 h-10 shrink-0">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-surface-dim">
-                  <Image fill
+                  <Image width={40} height={40}
                     alt="Client Avatar"
                     className="w-full h-full object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuzrthd5B1oov1K_EHgCizWj2ewPCLpGCD8lNkWK0489FbHy2bcLDUW9nX3hoW1jq4E6ldW_BT9BwQv2YRAmccHOm5tMlHkjQkxU56RmQX66tNKW-68yIO7K_tV94SnoPJCOY9qpLImFmrSbHXvBmt_lzS70qLRVYFUqXXSVhG9g3erFpo1tap6dHdtoFux76x7oFd77ob_4FFN9igDDTsASmDsCL2g8G8jmbFTtueZYJc50_ngc_E55rtMnh-XOxxeRZ5NOvsuqGC"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                  />
                 </div>
                 <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#25D366] rounded-full flex items-center justify-center border-2 border-surface-container-lowest">
                   <span className="material-symbols-outlined fill text-white text-[12px]">
@@ -176,11 +176,11 @@ export default function DashboardOverview() {
             <div className="group flex items-start gap-4 p-4 rounded-lg hover:bg-surface-container-lowest/80 border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
               <div className="relative w-10 h-10 shrink-0">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-surface-dim">
-                  <Image fill
+                  <Image width={40} height={40}
                     alt="Client Avatar"
                     className="w-full h-full object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRITWvTNa1Q1vkn3HHTk7_-eqgXsn3mseX5ayRZKB3-W-HlK5LokGonUQHOTlAuuuSp9bRV5qhIJiTXYmgF8va6lRmB1C-noGFYZqtg78QZbFEWyChgzCvdtZCLzquUIp3uJDXPm2jBytw4whFVgkFQmI5z0JCjfh0blxDvUdlr2AFA08RP0GpE7ocF6V31xIP3LLcO1kiU3RJgT43RCYd5cDkQo08UBK4u-xX7NzCasxQn9e0qlCuwWAUJ_5pJchLbJE7Ys68Zb0G"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                  />
                 </div>
                 <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#25D366] rounded-full flex items-center justify-center border-2 border-surface-container-lowest">
                   <span className="material-symbols-outlined fill text-white text-[12px]">
