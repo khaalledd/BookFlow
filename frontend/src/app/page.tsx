@@ -134,7 +134,7 @@ export default function LandingPage() {
               Features
             </a>
             <a className="nav-link" href="#solutions">
-              Solutions
+              Browse
             </a>
             <a className="nav-link" href="#pricing">
               Pricing
@@ -335,57 +335,111 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="solutions" className="space-y-16" data-reveal>
-          <div className="reveal-base text-center max-w-2xl mx-auto">
-            <h2 className="font-h2 text-h2 text-on-background mb-4">
-              Built for Independent Professionals
-            </h2>
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Designed to elevate your brand, no matter your craft.
-            </p>
-          </div>
-          <div className="reveal-base grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="glass-panel p-lg rounded-2xl flex flex-col items-center text-center group hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(53,133,142,0.2)] hover:border-secondary-container/80 transition-all duration-500 cursor-default">
-              <div className="w-16 h-16 rounded-full bg-secondary-container/40 flex items-center justify-center mb-6 group-hover:bg-secondary-container/70 group-hover:scale-110 transition-all duration-300">
-                <span className="material-symbols-outlined text-secondary text-2xl group-hover:rotate-12 transition-transform duration-300">
-                  content_cut
-                </span>
-              </div>
-              <h4 className="font-h3 text-h3 text-on-background text-lg mb-2">
-                Barbers &amp; Salons
-              </h4>
-              <p className="font-body-md text-body-md text-on-surface-variant text-sm">
-                Manage chairs, handle deposits, and keep the line moving without
-                touching your phone.
+        <section className="relative z-10 py-24 bg-surface-container-low/50" id="solutions" data-reveal>
+          <div className="reveal-base max-w-max-width mx-auto w-full">
+            <div className="text-center mb-16">
+              <h2 className="font-h2 text-h2 text-on-surface mb-4">
+                Find your next appointment
+              </h2>
+              <p className="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">
+                Discover top-rated professionals in your area who use Scheduly
+                for seamless booking.
               </p>
             </div>
-            <div className="glass-panel p-lg rounded-2xl flex flex-col items-center text-center group hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(53,133,142,0.2)] hover:border-tertiary-container/40 transition-all duration-500 cursor-default">
-              <div className="w-16 h-16 rounded-full bg-tertiary-container/20 flex items-center justify-center mb-6 group-hover:bg-tertiary-container/40 group-hover:scale-110 transition-all duration-300">
-                <span className="material-symbols-outlined text-tertiary text-2xl group-hover:scale-110 transition-transform duration-300">
-                  school
-                </span>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Category Card 1 */}
+              <div className="bg-surface-container-lowest/40 backdrop-blur-xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_8px_32px_0_rgba(53,133,142,0.03)] hover:shadow-[0_8px_32px_0_rgba(53,133,142,0.08)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                <div className="w-12 h-12 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-2xl group-hover:rotate-12 transition-transform duration-300">
+                    content_cut
+                  </span>
+                </div>
+                <h3 className="font-h3 text-h3 text-on-surface mb-2">
+                  Barbers &amp; Salons
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+                  Haircuts, coloring, styling, and treatments.
+                </p>
+                <div className="flex items-center text-primary font-label-sm text-label-sm group-hover:gap-2 transition-all mt-auto">
+                  <span>Browse 2,400+ spots</span>
+                  <span className="material-symbols-outlined text-sm">
+                    arrow_forward
+                  </span>
+                </div>
               </div>
-              <h4 className="font-h3 text-h3 text-on-background text-lg mb-2">
-                Tutors &amp; Coaches
-              </h4>
-              <p className="font-body-md text-body-md text-on-surface-variant text-sm">
-                Schedule sessions, share video links automatically, and collect
-                payments upfront.
-              </p>
+
+              {/* Category Card 2 */}
+              <div className="bg-surface-container-lowest/40 backdrop-blur-xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_8px_32px_0_rgba(53,133,142,0.03)] hover:shadow-[0_8px_32px_0_rgba(53,133,142,0.08)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                <div className="w-12 h-12 rounded-lg bg-tertiary-container text-on-tertiary-container flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform duration-300">
+                    school
+                  </span>
+                </div>
+                <h3 className="font-h3 text-h3 text-on-surface mb-2">
+                  Tutors &amp; Coaches
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+                  Academic tutoring, life coaching, and skills.
+                </p>
+                <div className="flex items-center text-primary font-label-sm text-label-sm group-hover:gap-2 transition-all mt-auto">
+                  <span>Browse 1,800+ experts</span>
+                  <span className="material-symbols-outlined text-sm">
+                    arrow_forward
+                  </span>
+                </div>
+              </div>
+
+              {/* Category Card 3 */}
+              <div className="bg-surface-container-lowest/40 backdrop-blur-xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_8px_32px_0_rgba(53,133,142,0.03)] hover:shadow-[0_8px_32px_0_rgba(53,133,142,0.08)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                <div className="w-12 h-12 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-2xl group-hover:rotate-180 transition-transform duration-700">
+                    self_improvement
+                  </span>
+                </div>
+                <h3 className="font-h3 text-h3 text-on-surface mb-2">
+                  Wellness &amp; Health
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+                  Therapy, massage, yoga, and personal training.
+                </p>
+                <div className="flex items-center text-primary font-label-sm text-label-sm group-hover:gap-2 transition-all mt-auto">
+                  <span>Browse 3,100+ practitioners</span>
+                  <span className="material-symbols-outlined text-sm">
+                    arrow_forward
+                  </span>
+                </div>
+              </div>
+
+              {/* Category Card 4 - Gyms */}
+              <div className="bg-surface-container-lowest/40 backdrop-blur-xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_8px_32px_0_rgba(53,133,142,0.03)] hover:shadow-[0_8px_32px_0_rgba(53,133,142,0.08)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                <div className="w-12 h-12 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-2xl group-hover:-rotate-12 transition-transform duration-300">
+                    fitness_center
+                  </span>
+                </div>
+                <h3 className="font-h3 text-h3 text-on-surface mb-2">
+                  Gyms &amp; Fitness
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">
+                  Personal training, group classes, and gym access.
+                </p>
+                <div className="flex items-center text-primary font-label-sm text-label-sm group-hover:gap-2 transition-all mt-auto">
+                  <span>Browse 1,200+ spots</span>
+                  <span className="material-symbols-outlined text-sm">
+                    arrow_forward
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="glass-panel p-lg rounded-2xl flex flex-col items-center text-center group hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(53,133,142,0.2)] hover:border-primary-container/40 transition-all duration-500 sm:col-span-2 lg:col-span-1 cursor-default">
-              <div className="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center mb-6 group-hover:bg-primary-container/40 group-hover:scale-110 transition-all duration-300">
-                <span className="material-symbols-outlined text-primary text-2xl group-hover:rotate-180 transition-transform duration-700">
-                  spa
+
+            <div className="mt-12 text-center">
+              <button className="px-8 py-3 rounded-full bg-surface-container-highest text-on-surface font-button text-button hover:bg-surface-dim transition-colors inline-flex items-center justify-center gap-2 group">
+                <span className="material-symbols-outlined group-hover:scale-110 transition-transform">
+                  search
                 </span>
-              </div>
-              <h4 className="font-h3 text-h3 text-on-background text-lg mb-2">
-                Wellness Experts
-              </h4>
-              <p className="font-body-md text-body-md text-on-surface-variant text-sm">
-                Create a calm, seamless booking experience that reflects your
-                therapeutic brand.
-              </p>
+                Explore all categories
+              </button>
             </div>
           </div>
         </section>
