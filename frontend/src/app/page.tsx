@@ -2,7 +2,55 @@
 import Image from 'next/image';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+
+const faqs = [
+  {
+    question: "Do I need my own website?",
+    answer: "No! Scheduly provides you with a beautiful, custom glassmorphism booking page that you can link directly in your Instagram, TikTok, or Twitter bio."
+  },
+  {
+    question: "Does it sync with my current calendar?",
+    answer: "Yes. Scheduly seamlessly syncs with Google Calendar, Apple Calendar, and Outlook to ensure you never get double-booked."
+  },
+  {
+    question: "How do I collect payments?",
+    answer: "You can securely accept payments upfront via Stripe, Apple Pay, and Google Pay. You keep 100% of your earnings minus standard credit card processing fees."
+  }
+];
+
+function FAQAccordion() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  return (
+    <div className="flex flex-col gap-4 max-w-3xl mx-auto w-full">
+      {faqs.map((faq, idx) => (
+        <div
+          key={idx}
+          className="glass-panel bg-surface-container-lowest/40 backdrop-blur-xl border border-outline-variant/30 rounded-2xl overflow-hidden transition-all duration-300"
+        >
+          <button
+            className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none group"
+            onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+          >
+            <span className={`font-h3 text-h3 text-lg transition-colors duration-300 ${openIndex === idx ? 'text-primary' : 'text-on-surface group-hover:text-primary'}`}>{faq.question}</span>
+            <span className={`material-symbols-outlined transition-transform duration-300 ${openIndex === idx ? 'text-primary rotate-180' : 'text-on-surface-variant group-hover:text-primary'}`}>
+              expand_more
+            </span>
+          </button>
+          <div
+            className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === idx ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}
+          >
+            <div className="px-6 pb-6 pt-0 text-on-surface-variant font-body-md">
+              {faq.answer}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function LandingPage() {
   useEffect(() => {
@@ -91,8 +139,11 @@ export default function LandingPage() {
             <a className="nav-link" href="#pricing">
               Pricing
             </a>
-            <a className="nav-link" href="#resources">
-              Resources
+            <a className="nav-link" href="#testimonials">
+              Reviews
+            </a>
+            <a className="nav-link" href="#faq">
+              FAQ
             </a>
           </div>
           <div className="flex items-center gap-4">
@@ -532,6 +583,17 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section id="faq" className="space-y-12" data-reveal>
+          <div className="reveal-base flex flex-col items-center text-center mb-8 gap-4 pb-2">
+            <h2 className="font-h2 text-h2 text-on-background mb-2">
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <div className="reveal-base w-full pb-16">
+            <FAQAccordion />
           </div>
         </section>
       </main>
