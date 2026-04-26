@@ -459,103 +459,79 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="resources" className="space-y-16" data-reveal>
-          <div className="reveal-base flex flex-col md:flex-row justify-between items-end mb-8 gap-4 border-b border-outline-variant/30 pb-6">
-            <div>
-              <h2 className="font-h2 text-h2 text-on-background mb-2">
-                Grow Your Business
-              </h2>
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                Guides and resources to help you scale your independent
-                practice.
-              </p>
-            </div>
-            <a
-              href="#"
-              className="font-button text-button text-primary hover:text-primary-container transition-colors flex items-center gap-1 group"
-            >
-              View All Resources{' '}
-              <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
-                arrow_forward
-              </span>
-            </a>
+        <section id="testimonials" className="space-y-16" data-reveal>
+          <div className="reveal-base flex flex-col items-center text-center mb-8 gap-4 pb-6">
+            <h2 className="font-h2 text-h2 text-on-background mb-2">
+              Loved by Professionals
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+              See how independent creators are saving hours each week and ending the back-and-forth messaging madness.
+            </p>
           </div>
 
-          <div className="reveal-base grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Resource Card 1 */}
-            <a
-              href="#"
-              className="glass-panel rounded-xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(53,133,142,0.2)] transition-all duration-500"
-            >
-              <div className="h-48 bg-secondary-container/30 relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <span className="material-symbols-outlined text-5xl text-primary/50 group-hover:scale-110 group-hover:text-primary/80 transition-all duration-500 relative z-10">
-                  trending_up
-                </span>
+          <div className="reveal-base grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Testimonial Card 1 */}
+            <div className="glass-panel bg-surface-container-lowest/40 backdrop-blur-xl border border-outline-variant/30 rounded-3xl p-8 shadow-lg shadow-shadow/5 hover:bg-surface-container-lowest/60 hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
+              <div className="flex items-center gap-1 mb-6 text-[#FFB400]">
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
               </div>
-              <div className="p-6">
-                <div className="text-xs font-bold uppercase tracking-wider text-secondary mb-2">
-                  Growth Guide
+              <p className="font-body-lg text-on-surface mb-8 flex-grow">
+                &quot;Scheduly completely eliminated the back-and-forth texts I used to have with clients. I just send my link and wake up to bookings!&quot;
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <Image width={48} height={48} alt="Sarah" src="https://i.pravatar.cc/150?u=sarah" className="rounded-full object-cover border-2 border-primary/20" />
+                <div>
+                  <h4 className="font-label-lg text-on-surface font-bold">Sarah Jenkins</h4>
+                  <p className="font-label-sm text-on-surface-variant">Personal Trainer</p>
                 </div>
-                <h4 className="font-h3 text-h3 text-on-surface text-lg mb-3 group-hover:text-primary transition-colors">
-                  How to get 10x more bookings from Instagram
-                </h4>
-                <p className="font-body-md text-body-md text-on-surface-variant text-sm">
-                  Learn the exact bio optimization and content strategy top
-                  professionals use to convert followers.
-                </p>
               </div>
-            </a>
+            </div>
 
-            {/* Resource Card 2 */}
-            <a
-              href="#"
-              className="glass-panel rounded-xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(53,133,142,0.2)] transition-all duration-500"
-            >
-              <div className="h-48 bg-tertiary-container/20 relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-tr from-tertiary/20 to-primary/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <span className="material-symbols-outlined text-5xl text-tertiary/50 group-hover:scale-110 group-hover:text-tertiary/80 transition-all duration-500 relative z-10">
-                  settings_suggest
-                </span>
+            {/* Testimonial Card 2 */}
+            <div className="glass-panel bg-surface-container-lowest/40 backdrop-blur-xl border border-outline-variant/30 rounded-3xl p-8 shadow-lg shadow-shadow/5 hover:bg-surface-container-lowest/60 hover:border-primary/30 transition-all duration-300 flex flex-col h-full md:translate-y-8">
+              <div className="flex items-center gap-1 mb-6 text-[#FFB400]">
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
               </div>
-              <div className="p-6">
-                <div className="text-xs font-bold uppercase tracking-wider text-tertiary mb-2">
-                  Setup Tutorial
+              <p className="font-body-lg text-on-surface mb-8 flex-grow">
+                &quot;The glassmorphism design of my booking page makes my photography business look so premium. Clients constantly compliment how easy it is to book me.&quot;
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <Image width={48} height={48} alt="Marcus" src="https://i.pravatar.cc/150?u=marcus" className="rounded-full object-cover border-2 border-primary/20" />
+                <div>
+                  <h4 className="font-label-lg text-on-surface font-bold">Marcus Chen</h4>
+                  <p className="font-label-sm text-on-surface-variant">Portrait Photographer</p>
                 </div>
-                <h4 className="font-h3 text-h3 text-on-surface text-lg mb-3 group-hover:text-tertiary transition-colors">
-                  Setting up your Scheduly Hub in 5 minutes
-                </h4>
-                <p className="font-body-md text-body-md text-on-surface-variant text-sm">
-                  A step-by-step walkthrough to get your services online and
-                  start accepting payments immediately.
-                </p>
               </div>
-            </a>
+            </div>
 
-            {/* Resource Card 3 */}
-            <a
-              href="#"
-              className="glass-panel rounded-xl overflow-hidden group hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(53,133,142,0.2)] transition-all duration-500"
-            >
-              <div className="h-48 bg-primary-container/20 relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-secondary/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <span className="material-symbols-outlined text-5xl text-primary/50 group-hover:scale-110 group-hover:text-primary/80 transition-all duration-500 relative z-10">
-                  draw
-                </span>
+            {/* Testimonial Card 3 */}
+            <div className="glass-panel bg-surface-container-lowest/40 backdrop-blur-xl border border-outline-variant/30 rounded-3xl p-8 shadow-lg shadow-shadow/5 hover:bg-surface-container-lowest/60 hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
+              <div className="flex items-center gap-1 mb-6 text-[#FFB400]">
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
+                <span className="material-symbols-outlined fill text-[20px]">star</span>
               </div>
-              <div className="p-6">
-                <div className="text-xs font-bold uppercase tracking-wider text-primary mb-2">
-                  Templates
+              <p className="font-body-lg text-on-surface mb-8 flex-grow">
+                &quot;I used to lose track of DMs on Instagram. Now everything is in one dashboard, and my no-shows dropped by 80% thanks to the automated reminders.&quot;
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <Image width={48} height={48} alt="Elena" src="https://i.pravatar.cc/150?u=elena" className="rounded-full object-cover border-2 border-primary/20" />
+                <div>
+                  <h4 className="font-label-lg text-on-surface font-bold">Elena Rodriguez</h4>
+                  <p className="font-label-sm text-on-surface-variant">Nail Technician</p>
                 </div>
-                <h4 className="font-h3 text-h3 text-on-surface text-lg mb-3 group-hover:text-primary transition-colors">
-                  5 Text message templates to reduce no-shows
-                </h4>
-                <p className="font-body-md text-body-md text-on-surface-variant text-sm">
-                  Copy and paste these proven reminder sequences into your
-                  automated workflow.
-                </p>
               </div>
-            </a>
+            </div>
           </div>
         </section>
       </main>
