@@ -188,7 +188,7 @@ export class BusinessesService {
     const [todaysBookings, weekBookingsCount, monthBookingsCount, popularServicesData] = await Promise.all([
       this.prisma.booking.findMany({
         where: { businessId: id, date: todayStart, status: { not: 'CANCELLED' } },
-        include: { customer: { select: { name: true } }, service: { select: { name: true } } },
+        include: { customer: { select: { name: true } }, service: { select: { name: true, duration: true } } },
         orderBy: { startTime: 'asc' }
       }),
       this.prisma.booking.count({

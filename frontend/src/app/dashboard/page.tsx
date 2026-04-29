@@ -1,7 +1,51 @@
 'use client';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useAuth } from '@/store/auth';
+import { api } from '@/lib/api';
+
+// Simple helper to fetch the business ID since it might not be cached correctly in some setups
+async function getMyBusiness(userId: string) {
+  const res = await api.get('/businesses?limit=100');
+  const businesses = res.data.data?.data || res.data.data || [];
+  return businesses.find((b: any) => b.ownerId === userId) || null;
+}
 
 export default function DashboardOverview() {
+
+  const { user } = useAuth();
+  const [stats, setStats] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [businessSlug, setBusinessSlug] = useState<string>('');
+
+  useEffect(() => {
+    if (!user) return;
+    let mounted = true;
+    
+    async function loadData() {
+      try {
+        const business = await getMyBusiness(user!.id);
+        if (business && mounted) {
+          setBusinessSlug(business.slug);
+          const res = await api.get(`/businesses/${business.id}/dashboard`);
+          setStats(res.data.data || res.data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+    
+    loadData();
+    return () => { mounted = false };
+  }, [user]);
+
+  const hoursBooked = stats ? (stats.todaysBookings?.reduce((acc: number, b: any) => acc + (b.service?.duration || 0), 0) / 60).toFixed(1) : '0.0';
+  const todayCount = stats?.todayCount || 0;
+  const thisWeekCount = stats?.thisWeekCount || 0;
+  const popularCount = stats?.popularServices?.reduce((acc: number, s: any) => acc + s.count, 0) || 0;
+
   return (
     <>
       {/* Page Header */}
@@ -16,7 +60,7 @@ export default function DashboardOverview() {
           <span className="material-symbols-outlined text-[18px]">
             calendar_today
           </span>
-          Today, Oct 24
+          Today, {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}
         </div>
       </header>
 
@@ -41,7 +85,7 @@ export default function DashboardOverview() {
             </span>
           </div>
           <div className="relative z-10">
-            <h3 className="font-h2 text-h2 text-on-surface">18.5h</h3>
+            <h3 className="font-h2 text-h2 text-on-surface">{loading ? "..." : `${hoursBooked}h`}</h3>
             <p className="font-label-sm text-[12px] text-outline mt-1">
               vs. yesterday
             </p>
@@ -63,10 +107,8 @@ export default function DashboardOverview() {
             </span>
           </div>
           <div className="relative z-10">
-            <h3 className="font-h2 text-h2 text-on-surface">14</h3>
-            <p className="font-label-sm text-[12px] text-outline mt-1">
-              3 new bookings
-            </p>
+            <h3 className="font-h2 text-h2 text-on-surface">{loading ? "..." : todayCount}</h3>
+            <p className="font-label-sm text-[12px] text-outline mt-1">{loading ? "..." : `${thisWeekCount} this week`}</p>
           </div>
         </div>
 
@@ -82,7 +124,7 @@ export default function DashboardOverview() {
             </span>
           </div>
           <div className="relative z-10">
-            <h3 className="font-h2 text-h2 text-on-primary">142</h3>
+            <h3 className="font-h2 text-h2 text-on-primary">{loading ? "..." : popularCount}</h3>
             <p className="font-label-sm text-[12px] text-on-primary/70 mt-1">
               From social channels
             </p>
@@ -113,7 +155,7 @@ export default function DashboardOverview() {
             
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-lg mx-auto">
               <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
-                scheduly.com/b/your-business
+                {businessSlug ? `scheduly.com/b/${businessSlug}` : "scheduly.com/b/your-business"}
               </div>
               <button className="bg-primary hover:bg-primary-container text-on-primary font-button px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center">
                 <span className="material-symbols-outlined text-[18px]">content_copy</span>
@@ -142,69 +184,50 @@ export default function DashboardOverview() {
               <span className="material-symbols-outlined">more_horiz</span>
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-lg relative">
+                    <div className="flex-1 overflow-y-auto p-lg relative">
             <div className="absolute left-[39px] top-lg bottom-lg w-px bg-outline-variant/30"></div>
             <div className="flex flex-col gap-6 relative">
-              {/* Appointment 1 */}
-              <div className="flex gap-4 relative">
-                <div className="w-14 shrink-0 text-right font-label-sm text-label-sm text-primary pt-1">
-                  11:30
-                </div>
-                <div className="w-3 h-3 rounded-full bg-primary absolute left-[34px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10"></div>
-                <div className="flex-1 bg-surface-container-low p-4 rounded-lg border border-primary/20 shadow-sm relative overflow-hidden">
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
-                  <h4 className="font-label-sm text-label-sm text-on-surface mb-1">
-                    Initial Consultation
-                  </h4>
-                  <p className="text-[12px] text-on-surface-variant flex items-center gap-1 mb-2">
-                    <span className="material-symbols-outlined text-[14px]">
-                      person
-                    </span>
-                    Sarah Jenkins
-                  </p>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-medium tracking-wide uppercase">
-                    In Person
-                  </span>
-                </div>
-              </div>
-
-              {/* Appointment 2 */}
-              <div className="flex gap-4 relative">
-                <div className="w-14 shrink-0 text-right font-label-sm text-label-sm text-outline pt-1">
-                  13:00
-                </div>
-                <div className="w-3 h-3 rounded-full bg-outline-variant absolute left-[34px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10"></div>
-                <div className="flex-1 p-3 rounded-lg border border-transparent hover:bg-surface-container-lowest/50 transition-colors">
-                  <h4 className="font-label-sm text-label-sm text-on-surface-variant mb-1">
-                    Follow-up Review
-                  </h4>
-                  <p className="text-[12px] text-outline flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">
-                      videocam
-                    </span>
-                    Mark D. (Zoom)
-                  </p>
-                </div>
-              </div>
-
-              {/* Appointment 3 */}
-              <div className="flex gap-4 relative">
-                <div className="w-14 shrink-0 text-right font-label-sm text-label-sm text-outline pt-1">
-                  15:45
-                </div>
-                <div className="w-3 h-3 rounded-full bg-outline-variant absolute left-[34px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10"></div>
-                <div className="flex-1 p-3 rounded-lg border border-transparent hover:bg-surface-container-lowest/50 transition-colors">
-                  <h4 className="font-label-sm text-label-sm text-on-surface-variant mb-1">
-                    Project Sync
-                  </h4>
-                  <p className="text-[12px] text-outline flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">
-                      person
-                    </span>
-                    Design Team
-                  </p>
-                </div>
-              </div>
+              {loading ? (
+                <div className="text-center text-outline-variant py-8">Loading schedule...</div>
+              ) : stats?.todaysBookings?.length === 0 ? (
+                <div className="text-center text-outline-variant py-8">No appointments scheduled for today.</div>
+              ) : (
+                stats?.todaysBookings?.map((booking: any, i: number) => {
+                  const startTime = booking.startTime.substring(0, 5); // Format HH:MM from HH:MM:SS
+                  
+                  // Alternate styling slightly for variety just like the static template
+                  const isPrimary = i % 2 === 0;
+                  
+                  return (
+                    <div key={booking.id} className="flex gap-4 relative">
+                      <div className={`w-14 shrink-0 text-right font-label-sm text-label-sm pt-1 ${isPrimary ? 'text-primary' : 'text-outline'}`}>
+                        {startTime}
+                      </div>
+                      <div className={`w-3 h-3 rounded-full absolute left-[34px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10 ${isPrimary ? 'bg-primary' : 'bg-outline-variant'}`}></div>
+                      
+                      <div className={`flex-1 p-3 rounded-lg border transition-colors ${isPrimary ? 'bg-surface-container-low border-primary/20 shadow-sm relative overflow-hidden' : 'border-transparent hover:bg-surface-container-lowest/50'}`}>
+                        {isPrimary && <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>}
+                        
+                        <h4 className={`font-label-sm text-label-sm mb-1 ${isPrimary ? 'text-on-surface' : 'text-on-surface-variant'}`}>
+                          {booking.service?.name || 'Service'}
+                        </h4>
+                        <p className={`text-[12px] flex items-center gap-1 ${isPrimary ? 'text-on-surface-variant mb-2' : 'text-outline'}`}>
+                          <span className="material-symbols-outlined text-[14px]">
+                            person
+                          </span>
+                          {booking.customer?.name || 'Client'}
+                        </p>
+                        
+                        {isPrimary && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-medium tracking-wide uppercase">
+                            Confirmed
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
