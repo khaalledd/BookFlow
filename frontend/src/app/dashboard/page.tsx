@@ -29,9 +29,9 @@ export default function DashboardOverview() {
           <div className="flex justify-between items-start mb-4 relative z-10">
             <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">
-                payments
+                schedule
               </span>
-              Daily Revenue
+              Hours Booked
             </span>
             <span className="px-2 py-1 bg-secondary-container/50 text-secondary font-label-sm text-[12px] rounded-full flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px]">
@@ -41,7 +41,7 @@ export default function DashboardOverview() {
             </span>
           </div>
           <div className="relative z-10">
-            <h3 className="font-h2 text-h2 text-on-surface">$1,240</h3>
+            <h3 className="font-h2 text-h2 text-on-surface">18.5h</h3>
             <p className="font-label-sm text-[12px] text-outline mt-1">
               vs. yesterday
             </p>
@@ -76,13 +76,13 @@ export default function DashboardOverview() {
           <div className="flex justify-between items-start mb-4 relative z-10">
             <span className="font-label-sm text-label-sm text-on-primary/80 flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">
-                person_add
+                visibility
               </span>
-              New Leads
+              Profile Views
             </span>
           </div>
           <div className="relative z-10">
-            <h3 className="font-h2 text-h2 text-on-primary">28</h3>
+            <h3 className="font-h2 text-h2 text-on-primary">142</h3>
             <p className="font-label-sm text-[12px] text-on-primary/70 mt-1">
               From social channels
             </p>
@@ -90,117 +90,46 @@ export default function DashboardOverview() {
         </div>
 
         {/* Middle Row: Social Hub & Today's Schedule */}
-        {/* Unified Social Hub */}
+        {/* Your Booking Link */}
         <div className="col-span-12 lg:col-span-8 bg-white/60 backdrop-blur-[20px] rounded-xl border border-outline-variant/30 shadow-[0_8px_32px_rgba(0,102,111,0.06)] flex flex-col overflow-hidden h-[400px]">
           <div className="px-lg py-md border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-lowest/50">
             <h3 className="font-h3 text-h3 text-on-surface flex items-center gap-2">
               <span className="material-symbols-outlined fill text-primary">
-                forum
+                link
               </span>
-              Social Hub
+              Your Booking Link
             </h3>
-            <div className="flex gap-2">
-              <span className="px-3 py-1 bg-surface-container text-on-surface-variant font-label-sm text-[12px] rounded-full border border-outline-variant/30 cursor-pointer hover:bg-surface-variant transition-colors">
-                All
-              </span>
-              <span className="px-3 py-1 text-outline font-label-sm text-[12px] rounded-full cursor-pointer hover:bg-surface-variant/50 transition-colors">
-                WhatsApp
-              </span>
-              <span className="px-3 py-1 text-outline font-label-sm text-[12px] rounded-full cursor-pointer hover:bg-surface-variant/50 transition-colors">
-                Instagram
-              </span>
-            </div>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
-            {/* Message Item 1 */}
-            <div className="group flex items-start gap-4 p-4 rounded-lg hover:bg-surface-container-lowest/80 border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
-              <div className="relative w-10 h-10 shrink-0">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-surface-dim">
-                  <Image width={40} height={40}
-                    alt="Client Avatar"
-                    className="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuzrthd5B1oov1K_EHgCizWj2ewPCLpGCD8lNkWK0489FbHy2bcLDUW9nX3hoW1jq4E6ldW_BT9BwQv2YRAmccHOm5tMlHkjQkxU56RmQX66tNKW-68yIO7K_tV94SnoPJCOY9qpLImFmrSbHXvBmt_lzS70qLRVYFUqXXSVhG9g3erFpo1tap6dHdtoFux76x7oFd77ob_4FFN9igDDTsASmDsCL2g8G8jmbFTtueZYJc50_ngc_E55rtMnh-XOxxeRZ5NOvsuqGC"
-                  />
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#25D366] rounded-full flex items-center justify-center border-2 border-surface-container-lowest">
-                  <span className="material-symbols-outlined fill text-white text-[12px]">
-                    chat
-                  </span>
-                </div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-baseline mb-1">
-                  <h4 className="font-label-sm text-label-sm text-on-surface truncate">
-                    Emma Thompson
-                  </h4>
-                  <span className="text-[12px] text-outline shrink-0">
-                    10:42 AM
-                  </span>
-                </div>
-                <p className="text-[14px] text-on-surface-variant truncate">
-                  Hi, do you have any availability for a consultation tomorrow
-                  afternoon?
-                </p>
-              </div>
+          <div className="flex-1 p-lg flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center mb-6">
+              <span className="material-symbols-outlined text-primary text-3xl">
+                public
+              </span>
             </div>
-
-            {/* Message Item 2 */}
-            <div className="group flex items-start gap-4 p-4 rounded-lg hover:bg-surface-container-lowest/80 border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer bg-surface-container-lowest/40">
-              <div className="relative w-10 h-10 shrink-0">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-surface-dim flex items-center justify-center text-primary font-h3">
-                  M
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#E1306C] rounded-full flex items-center justify-center border-2 border-surface-container-lowest">
-                  <span className="material-symbols-outlined fill text-white text-[12px]">
-                    photo_camera
-                  </span>
-                </div>
+            <h4 className="font-h2 text-h2 text-on-surface mb-2">Share your link to get booked</h4>
+            <p className="font-body-md text-on-surface-variant max-w-md mx-auto mb-8">
+              Post this link in your Instagram bio, send it in DMs, or add it to your website to let clients book you instantly.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-lg mx-auto">
+              <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
+                scheduly.com/b/your-business
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-baseline mb-1">
-                  <h4 className="font-label-sm text-label-sm text-on-surface truncate font-semibold">
-                    Michael Chen
-                  </h4>
-                  <span className="text-[12px] text-primary font-medium shrink-0">
-                    New
-                  </span>
-                </div>
-                <p className="text-[14px] text-on-surface truncate font-medium">
-                  Replied to your story: &quot;Looks amazing! How much
-                  for...&quot;
-                </p>
-              </div>
+              <button className="bg-primary hover:bg-primary-container text-on-primary font-button px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center">
+                <span className="material-symbols-outlined text-[18px]">content_copy</span>
+                Copy Link
+              </button>
             </div>
-
-            {/* Message Item 3 */}
-            <div className="group flex items-start gap-4 p-4 rounded-lg hover:bg-surface-container-lowest/80 border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
-              <div className="relative w-10 h-10 shrink-0">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-surface-dim">
-                  <Image width={40} height={40}
-                    alt="Client Avatar"
-                    className="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRITWvTNa1Q1vkn3HHTk7_-eqgXsn3mseX5ayRZKB3-W-HlK5LokGonUQHOTlAuuuSp9bRV5qhIJiTXYmgF8va6lRmB1C-noGFYZqtg78QZbFEWyChgzCvdtZCLzquUIp3uJDXPm2jBytw4whFVgkFQmI5z0JCjfh0blxDvUdlr2AFA08RP0GpE7ocF6V31xIP3LLcO1kiU3RJgT43RCYd5cDkQo08UBK4u-xX7NzCasxQn9e0qlCuwWAUJ_5pJchLbJE7Ys68Zb0G"
-                  />
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#25D366] rounded-full flex items-center justify-center border-2 border-surface-container-lowest">
-                  <span className="material-symbols-outlined fill text-white text-[12px]">
-                    chat
-                  </span>
-                </div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-baseline mb-1">
-                  <h4 className="font-label-sm text-label-sm text-on-surface truncate">
-                    David Wilson
-                  </h4>
-                  <span className="text-[12px] text-outline shrink-0">
-                    Yesterday
-                  </span>
-                </div>
-                <p className="text-[14px] text-on-surface-variant truncate">
-                  Thanks for the update, see you on Friday.
-                </p>
-              </div>
+            
+            <div className="mt-8 flex gap-4">
+              <button className="text-outline hover:text-primary transition-colors flex flex-col items-center gap-1">
+                <span className="material-symbols-outlined">qr_code_2</span>
+                <span className="text-[12px] font-medium">Get QR Code</span>
+              </button>
+              <button className="text-outline hover:text-primary transition-colors flex flex-col items-center gap-1">
+                <span className="material-symbols-outlined">open_in_new</span>
+                <span className="text-[12px] font-medium">Preview Page</span>
+              </button>
             </div>
           </div>
         </div>
@@ -284,9 +213,7 @@ export default function DashboardOverview() {
         <div className="col-span-12 bg-white/60 backdrop-blur-[20px] rounded-xl border border-outline-variant/30 shadow-[0_8px_32px_rgba(0,102,111,0.06)] p-lg flex flex-col h-[300px]">
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h3 className="font-h3 text-h3 text-on-surface mb-1">
-                Lead Generation Growth
-              </h3>
+              <h3 className="font-h3 text-h3 text-on-surface mb-1">Bookings & Views</h3>
               <p className="font-label-sm text-label-sm text-on-surface-variant">
                 Past 30 Days across all channels
               </p>
@@ -294,15 +221,11 @@ export default function DashboardOverview() {
             <div className="flex gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-primary"></div>
-                <span className="text-[12px] text-outline font-medium">
-                  Organic
-                </span>
+                <span className="text-[12px] text-outline font-medium">Bookings</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-tertiary"></div>
-                <span className="text-[12px] text-outline font-medium">
-                  Social
-                </span>
+                <span className="text-[12px] text-outline font-medium">Profile Views</span>
               </div>
             </div>
           </div>
@@ -372,9 +295,7 @@ export default function DashboardOverview() {
                 strokeWidth="2"
               ></circle>
             </svg>
-            <div className="absolute left-[80%] top-[20%] -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-2 py-1 rounded text-[10px] font-medium shadow-md">
-              Oct 18: 84 Leads
-            </div>
+            <div className="absolute left-[80%] top-[20%] -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-2 py-1 rounded text-[10px] font-medium shadow-md">Oct 18: 12 Bookings</div>
           </div>
         </div>
       </div>

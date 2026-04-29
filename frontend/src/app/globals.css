@@ -58,11 +58,24 @@
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(190, 234, 204, 0.3); /* Lime Mist / secondary-container tint */
-  box-shadow: 0 10px 30px -10px rgba(53, 133, 142, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 24px -1px rgba(0, 102, 111, 0.08), 0 0 1px 0 rgba(0, 102, 111, 0.15);
+}
+
+.input-focus-border {
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.input-focus-border:focus {
+  border-color: #00666f;
+  box-shadow: 0 0 0 3px rgba(0, 102, 111, 0.1);
+  outline: none;
+}
+.bg-gradient-soft {
+  background: linear-gradient(135deg, #e3f8f8 0%, #ddf2f3 100%);
 }
 
 .text-gradient {
