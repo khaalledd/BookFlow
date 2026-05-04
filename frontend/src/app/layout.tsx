@@ -9,9 +9,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: 'Scheduly | Booking System',
+  title: 'VerdantBook | Booking System',
   description:
-    'End the DM madness. Consolidate your chaotic social media messages into one elegant, professional scheduling hub.',
+    'Move clients from DMs to a calm, professional booking page and business dashboard.',
 };
 
 export default function RootLayout({
