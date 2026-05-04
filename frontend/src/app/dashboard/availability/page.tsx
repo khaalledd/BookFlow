@@ -3,13 +3,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { useAuth } from '@/store/auth';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -130,25 +123,25 @@ export default function AvailabilityPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <Card className="bg-card/40 border-white/10 backdrop-blur-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-heading text-primary">
+      <div className="glass-panel rounded-2xl p-6 md:p-8 space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-h2 text-primary tracking-tight">
             Master Schedule
-          </CardTitle>
-          <CardDescription>
+          </h1>
+          <p className="font-label-sm text-on-surface-variant">
             Define your generic weekly working hours. Slots will be
             auto-generated from this.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        <div>
           <div className="space-y-4">
             {schedule.map((day, idx) => (
               <div
                 key={day.dayOfWeek}
-                className={`flex flex-col sm:flex-row sm:items-center gap-4 p-4 rounded-lg border transition-colors ${
+                className={`flex flex-col sm:flex-row sm:items-center gap-4 p-4 rounded-xl border transition-colors shadow-sm ${
                   day.active
-                    ? 'bg-black/40 border-primary/30'
-                    : 'bg-black/10 border-white/5 opacity-60'
+                    ? 'bg-surface-container-low border-primary/30'
+                    : 'bg-surface-container-lowest/50 border-outline-variant/30 opacity-60'
                 }`}
               >
                 <div className="w-40 flex items-center gap-3">
@@ -159,7 +152,7 @@ export default function AvailabilityPage() {
                     className="w-4 h-4 accent-primary"
                   />
                   <Label
-                    className={`font-semibold ${day.active ? 'text-white' : 'text-muted-foreground'}`}
+                    className={`font-semibold ${day.active ? 'text-on-surface' : 'text-outline-variant'}`}
                   >
                     {day.name}
                   </Label>
@@ -175,10 +168,10 @@ export default function AvailabilityPage() {
                         onChange={(e) =>
                           handleTimeChange(idx, 'startTime', e.target.value)
                         }
-                        className="bg-black/50"
+                        className="bg-surface-container-lowest border border-outline-variant/50 px-3 py-2 rounded-lg input-focus-border font-body-md text-on-surface"
                       />
                     </div>
-                    <span className="text-muted-foreground">to</span>
+                    <span className="text-outline-variant font-medium">to</span>
                     <div className="space-y-1 flex-1">
                       <Input
                         type="time"
@@ -187,12 +180,12 @@ export default function AvailabilityPage() {
                         onChange={(e) =>
                           handleTimeChange(idx, 'endTime', e.target.value)
                         }
-                        className="bg-black/50"
+                        className="bg-surface-container-lowest border border-outline-variant/50 px-3 py-2 rounded-lg input-focus-border font-body-md text-on-surface"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="flex-1 text-sm text-muted-foreground italic">
+                  <div className="flex-1 text-sm text-outline-variant italic font-medium">
                     Closed
                   </div>
                 )}
@@ -205,13 +198,13 @@ export default function AvailabilityPage() {
               size="lg"
               onClick={handleSave}
               disabled={saving}
-              className="px-8 font-semibold"
+              className="px-8 font-button bg-primary hover:bg-primary-container text-on-primary rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
             >
               {saving ? 'Saving...' : 'Save Configuration'}
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

@@ -3,13 +3,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { useAuth } from '@/store/auth';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, User, CheckCircle, XCircle } from 'lucide-react';
 import { getMyBusiness } from '@/lib/business';
@@ -112,15 +105,15 @@ export default function BookingsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'CONFIRMED':
-        return 'text-green-400 bg-green-400/10 border-green-400/20';
+        return 'text-primary bg-primary/10 border-primary/20';
       case 'PENDING':
-        return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
+        return 'text-amber-700 bg-amber-500/10 border-amber-500/20';
       case 'CANCELLED':
-        return 'text-red-400 bg-red-400/10 border-red-400/20';
+        return 'text-error bg-error/10 border-error/20';
       case 'COMPLETED':
-        return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
+        return 'text-blue-700 bg-blue-500/10 border-blue-500/20';
       default:
-        return 'text-muted-foreground bg-white/5 border-white/10';
+        return 'text-outline-variant bg-surface-container border-outline-variant/20';
     }
   };
 
@@ -135,37 +128,35 @@ export default function BookingsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <Card className="bg-card/40 border-white/10 backdrop-blur-md">
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <div>
-              <CardTitle className="text-2xl font-heading text-primary">
-                Bookings
-              </CardTitle>
-              <CardDescription>
-                Manage your appointments and customer bookings.
-              </CardDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar size={18} className="text-muted-foreground" />
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:ring-primary focus:border-primary"
-              />
-            </div>
+    <div className="space-y-6 max-w-4xl mx-auto">
+      <div className="glass-panel rounded-2xl p-6 md:p-8 space-y-6">
+        <div className="flex justify-between items-center pb-4 border-b border-outline-variant/30">
+          <div>
+            <h1 className="text-3xl font-h2 text-primary tracking-tight">
+              Bookings
+            </h1>
+            <p className="font-label-sm text-on-surface-variant">
+              Manage your appointments and customer bookings.
+            </p>
           </div>
-        </CardHeader>
-        <CardContent>
+          <div className="flex items-center gap-2">
+            <Calendar size={18} className="text-outline" />
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-3 py-2 text-sm text-on-surface focus:ring-primary focus:border-primary shadow-sm"
+            />
+          </div>
+        </div>
+        <div>
           {bookings.length === 0 ? (
             <div className="text-center py-12">
               <Calendar
                 size={48}
-                className="mx-auto text-muted-foreground/30 mb-4"
+                className="mx-auto text-outline/30 mb-4"
               />
-              <p className="text-muted-foreground">
+              <p className="text-outline-variant font-medium">
                 No bookings for {selectedDate}
               </p>
             </div>
@@ -174,12 +165,12 @@ export default function BookingsPage() {
               {bookings.map((booking) => (
                 <div
                   key={booking.id}
-                  className="p-4 bg-black/30 rounded-lg border border-white/5 hover:border-white/10 transition-colors"
+                  className="p-4 bg-surface-container-low rounded-xl border border-outline-variant/50 hover:border-primary/30 transition-colors shadow-sm"
                 >
                   <div className="flex justify-between items-start">
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <h3 className="font-semibold text-white">
+                        <h3 className="font-semibold text-on-surface font-h3">
                           {booking.service.name}
                         </h3>
                         <span
@@ -189,20 +180,20 @@ export default function BookingsPage() {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 text-sm text-on-surface-variant font-medium">
                         <User size={14} />
                         <span>
                           {booking.customer?.name ||
                             booking.guestName ||
                             'Guest'}
                         </span>
-                        <span className="text-white/30">|</span>
+                        <span className="text-outline-variant/50">|</span>
                         <span>
                           {booking.customer?.email || booking.guestEmail}
                         </span>
                         {(booking.customer?.phone || booking.guestPhone) && (
                           <>
-                            <span className="text-white/30">|</span>
+                            <span className="text-outline-variant/50">|</span>
                             <span>
                               {booking.customer?.phone || booking.guestPhone}
                             </span>
@@ -211,20 +202,20 @@ export default function BookingsPage() {
                       </div>
 
                       <div className="flex items-center gap-4 text-sm">
-                        <span className="flex items-center gap-1 text-primary">
+                        <span className="flex items-center gap-1 text-primary font-bold">
                           <Clock size={14} />
                           {booking.startTime} - {booking.endTime}
                         </span>
-                        <span className="text-muted-foreground">
+                        <span className="text-on-surface-variant">
                           {booking.service.durationMinutes} mins
                         </span>
-                        <span className="font-medium text-primary">
+                        <span className="font-bold text-primary">
                           {booking.service.price} EGP
                         </span>
                       </div>
 
                       {booking.notes && (
-                        <p className="text-xs text-muted-foreground italic">
+                        <p className="text-xs text-outline italic">
                           Note: {booking.notes}
                         </p>
                       )}
@@ -236,7 +227,7 @@ export default function BookingsPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-green-500/30 text-green-400 hover:bg-green-500/10"
+                            className="border-primary/30 text-primary hover:bg-primary/10"
                             onClick={() => handleComplete(booking.id)}
                           >
                             <CheckCircle size={14} className="mr-1" />
@@ -245,7 +236,7 @@ export default function BookingsPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+                            className="border-error/30 text-error hover:bg-error/10"
                             onClick={() => handleCancel(booking.id)}
                           >
                             <XCircle size={14} className="mr-1" />
@@ -258,8 +249,8 @@ export default function BookingsPage() {
               ))}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

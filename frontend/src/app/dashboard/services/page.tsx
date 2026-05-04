@@ -3,13 +3,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { useAuth } from '@/store/auth';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -144,23 +137,24 @@ export default function ServicesPage() {
   }
 
   return (
-    <div className="space-y-8">
-      <Card className="bg-card/40 border-white/10 backdrop-blur-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-heading text-primary">
+    <div className="space-y-8 max-w-4xl mx-auto">
+      <div className="glass-panel rounded-2xl p-6 md:p-8 space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-h2 text-primary tracking-tight">
             Manage Services
-          </CardTitle>
-          <CardDescription>
+          </h1>
+          <p className="font-label-sm text-on-surface-variant">
             Add the services you offer to clients.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        
+        <div>
           <form
             onSubmit={handleAddService}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end bg-black/20 p-4 rounded-lg border border-white/5 mb-8"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end bg-surface-container border border-outline-variant/30 p-6 rounded-xl mb-8"
           >
             <div className="space-y-2">
-              <Label htmlFor="name">Service Name</Label>
+              <Label htmlFor="name" className="font-label-sm text-on-surface-variant font-semibold">Service Name</Label>
               <Input
                 id="name"
                 required
@@ -169,12 +163,12 @@ export default function ServicesPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="bg-black/40"
+                className="bg-surface-container-lowest border border-outline-variant/50 px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description" className="font-label-sm text-on-surface-variant font-semibold">Description</Label>
               <Input
                 id="description"
                 placeholder="Short detail"
@@ -182,12 +176,12 @@ export default function ServicesPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
-                className="bg-black/40"
+                className="bg-surface-container-lowest border border-outline-variant/50 px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="duration">Duration (Minutes)</Label>
+              <Label htmlFor="duration" className="font-label-sm text-on-surface-variant font-semibold">Duration (Minutes)</Label>
               <Input
                 id="duration"
                 type="number"
@@ -201,12 +195,12 @@ export default function ServicesPage() {
                     durationMinutes: Number(e.target.value),
                   })
                 }
-                className="bg-black/40"
+                className="bg-surface-container-lowest border border-outline-variant/50 px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="price">Price (EGP)</Label>
+              <Label htmlFor="price" className="font-label-sm text-on-surface-variant font-semibold">Price (EGP)</Label>
               <div className="flex gap-2">
                 <Input
                   id="price"
@@ -217,9 +211,9 @@ export default function ServicesPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, price: Number(e.target.value) })
                   }
-                  className="bg-black/40 flex-1"
+                  className="bg-surface-container-lowest border border-outline-variant/50 px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface flex-1"
                 />
-                <Button type="submit" disabled={saving}>
+                <Button type="submit" disabled={saving} className="bg-primary hover:bg-primary-container text-on-primary font-button">
                   {saving ? 'Adding...' : 'Add'}
                 </Button>
               </div>
@@ -227,11 +221,11 @@ export default function ServicesPage() {
           </form>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium border-b border-white/10 pb-2">
+            <h3 className="text-lg font-h3 text-on-surface border-b border-outline-variant/30 pb-2">
               Active Services
             </h3>
             {services.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-4">
+              <p className="text-sm text-outline-variant text-center py-4">
                 No services added yet.
               </p>
             ) : (
@@ -239,26 +233,26 @@ export default function ServicesPage() {
                 {services.map((svc) => (
                   <div
                     key={svc.id}
-                    className="flex justify-between items-center p-4 bg-black/30 rounded-lg border border-white/5 shadow-sm"
+                    className="flex justify-between items-center p-4 bg-surface-container-low rounded-xl border border-outline-variant/50 shadow-sm"
                   >
                     <div className="flex gap-4 items-center">
-                      <div className="bg-primary/20 p-3 rounded-full">
+                      <div className="bg-primary/10 p-3 rounded-full border border-primary/20">
                         <Scissors className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white">{svc.name}</h4>
-                        <p className="text-xs text-muted-foreground">
+                        <h4 className="font-semibold text-on-surface">{svc.name}</h4>
+                        <p className="text-xs text-on-surface-variant font-medium mt-1">
                           {svc.durationMinutes} mins • {svc.description}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <div className="flex flex-col items-end">
+                      <div className="flex flex-col items-end gap-2">
                         {editingId === svc.id ? (
                           <Input
                             type="number"
                             defaultValue={svc.price}
-                            className="h-8 w-28 bg-black/40 text-sm"
+                            className="h-8 w-28 bg-surface-container-lowest border-outline-variant/50 text-sm text-on-surface"
                             onBlur={(e) =>
                               handleQuickPriceUpdate(
                                 svc.id,
@@ -268,40 +262,42 @@ export default function ServicesPage() {
                           />
                         ) : (
                           <span
-                            className="font-medium text-lg text-primary cursor-pointer"
+                            className="font-h3 text-lg text-primary cursor-pointer hover:underline"
                             onClick={() => setEditingId(svc.id)}
                           >
                             {svc.price} EGP
                           </span>
                         )}
-                        <button
-                          type="button"
-                          className="mt-2 inline-flex h-10 min-w-[110px] items-center justify-center rounded-md border border-primary/35 bg-primary/15 px-4 text-xs font-semibold text-primary transition-all hover:bg-primary/25"
-                          onClick={() =>
-                            handleToggleActive(svc.id, !!svc.isActive)
-                          }
-                        >
-                          {svc.isActive ? 'Deactivate' : 'Activate'}
-                        </button>
-                        <label className="mt-2 inline-flex h-10 min-w-[110px] cursor-pointer items-center justify-center rounded-md border border-white/20 bg-black/35 px-4 text-xs font-semibold text-white transition-all hover:border-primary/40 hover:text-primary">
-                          Upload cover
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) handleCoverUpload(svc.id, file);
-                            }}
-                          />
-                        </label>
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            className="inline-flex h-8 min-w-[90px] items-center justify-center rounded-lg border border-primary bg-primary/5 px-3 text-xs font-semibold text-primary transition-all hover:bg-primary/10"
+                            onClick={() =>
+                              handleToggleActive(svc.id, !!svc.isActive)
+                            }
+                          >
+                            {svc.isActive ? 'Deactivate' : 'Activate'}
+                          </button>
+                          <label className="inline-flex h-8 min-w-[90px] cursor-pointer items-center justify-center rounded-lg border border-outline-variant/50 bg-surface-container px-3 text-xs font-semibold text-on-surface-variant transition-all hover:border-primary/40 hover:text-primary hover:bg-surface-container-high shadow-sm">
+                            Upload cover
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handleCoverUpload(svc.id, file);
+                              }}
+                            />
+                          </label>
+                        </div>
                       </div>
                       <button
                         onClick={() => handleDelete(svc.id)}
                         disabled={deletingId === svc.id}
-                        className="text-muted-foreground hover:text-destructive transition-colors p-2 disabled:opacity-50"
+                        className="text-outline hover:text-error transition-colors p-2 disabled:opacity-50"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-5 w-5" />
                       </button>
                     </div>
                   </div>
@@ -309,8 +305,8 @@ export default function ServicesPage() {
               </div>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

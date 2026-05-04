@@ -4,11 +4,6 @@ import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { useAuth } from '@/store/auth';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -192,22 +187,23 @@ export default function BusinessPage() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <Card className="bg-card/40 border-white/10 backdrop-blur-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-heading text-primary">
+    <div className="max-w-3xl mx-auto">
+      <div className="glass-panel rounded-2xl p-6 md:p-8 space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-h2 text-primary tracking-tight">
             {business ? 'Manage Your Business' : 'Create Business Profile'}
-          </CardTitle>
-          <CardDescription>
+          </h1>
+          <p className="font-label-sm text-on-surface-variant">
             {business
               ? 'Update your business details so customers can find you.'
               : "Let's set up your premium presence on BookFlow."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        
+        <div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Business Name</Label>
+              <Label htmlFor="name" className="font-label-sm text-on-surface-variant font-semibold">Business Name</Label>
               <Input
                 id="name"
                 required
@@ -215,38 +211,38 @@ export default function BusinessPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="bg-black/20"
+                className="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description" className="font-label-sm text-on-surface-variant font-semibold">Description</Label>
               <Input
                 id="description"
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
-                className="bg-black/20"
+                className="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category" className="font-label-sm text-on-surface-variant font-semibold">Category</Label>
                 <select
                   id="category"
                   value={formData.category}
                   onChange={(e) =>
                     setFormData({ ...formData, category: e.target.value })
                   }
-                  className="w-full rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="w-full bg-surface-container-lowest border border-outline-variant px-3 py-2 rounded-lg input-focus-border font-body-md text-on-surface"
                 >
                   {CATEGORIES.map((cat) => (
                     <option
                       key={cat}
                       value={cat}
-                      className="bg-background text-foreground"
+                      className="bg-surface-container-lowest text-on-surface"
                     >
                       {cat.charAt(0) + cat.slice(1).toLowerCase()}
                     </option>
@@ -255,7 +251,7 @@ export default function BusinessPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Contact Phone</Label>
+                <Label htmlFor="phone" className="font-label-sm text-on-surface-variant font-semibold">Contact Phone</Label>
                 <Input
                   id="phone"
                   required
@@ -263,14 +259,14 @@ export default function BusinessPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="bg-black/20"
+                  className="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="city">City</Label>
+                <Label htmlFor="city" className="font-label-sm text-on-surface-variant font-semibold">City</Label>
                 <Input
                   id="city"
                   required
@@ -278,12 +274,12 @@ export default function BusinessPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, city: e.target.value })
                   }
-                  className="bg-black/20"
+                  className="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
+                <Label htmlFor="address" className="font-label-sm text-on-surface-variant font-semibold">Address</Label>
                 <Input
                   id="address"
                   required
@@ -291,21 +287,21 @@ export default function BusinessPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, address: e.target.value })
                   }
-                  className="bg-black/20"
+                  className="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant"
                 />
               </div>
             </div>
 
             {business && (
-              <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
-                <p className="text-sm font-medium text-primary">
+              <div className="p-4 rounded-lg bg-surface-container border border-outline-variant">
+                <p className="text-sm font-medium text-on-surface-variant">
                   Public Booking Link:
                 </p>
                 <div className="mt-2 flex items-center gap-2">
                   <a
                     href={`/b/${business.slug}`}
                     target="_blank"
-                    className="text-xs hover:underline text-white/80 break-all"
+                    className="text-xs text-primary font-bold hover:underline break-all"
                   >
                     {typeof window !== 'undefined'
                       ? window.location.origin
@@ -315,7 +311,7 @@ export default function BusinessPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="h-8 px-3 text-xs border-primary/35"
+                    className="h-8 px-3 text-xs border-primary text-primary hover:bg-primary/10"
                     onClick={handleCopyPublicLink}
                   >
                     {copied ? 'Copied' : 'Copy'}
@@ -325,9 +321,9 @@ export default function BusinessPage() {
             )}
 
             {business && (
-              <div className="p-4 rounded-lg bg-black/20 border border-white/10">
-                <p className="text-sm font-medium text-white mb-2">Branding</p>
-                <label className="inline-flex h-11 cursor-pointer items-center justify-center rounded-md border border-primary/40 bg-primary/15 px-5 text-sm font-semibold text-primary transition-all hover:bg-primary/25">
+              <div className="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant">
+                <p className="text-sm font-medium text-on-surface-variant mb-2">Branding</p>
+                <label className="inline-flex h-11 cursor-pointer items-center justify-center rounded-lg border border-primary bg-primary/5 px-5 text-sm font-semibold text-primary transition-all hover:bg-primary/10 shadow-sm">
                   Upload Business Logo
                   <input
                     type="file"
@@ -342,7 +338,11 @@ export default function BusinessPage() {
               </div>
             )}
 
-            <Button type="submit" disabled={saving}>
+            <Button 
+              type="submit" 
+              disabled={saving} 
+              className="w-full bg-primary hover:bg-primary-container text-on-primary font-button py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
+            >
               {saving
                 ? 'Saving...'
                 : business
@@ -355,6 +355,7 @@ export default function BusinessPage() {
                 type="button"
                 variant="destructive"
                 onClick={handleDeleteBusiness}
+                className="w-full font-button py-2 rounded-lg"
               >
                 Delete Business
               </Button>
@@ -364,7 +365,7 @@ export default function BusinessPage() {
           {user?.role === 'ADMIN' && (
             <form
               onSubmit={handleCreateAdmin}
-              className="mt-8 space-y-3 rounded-lg border border-white/10 bg-black/20 p-4"
+              className="mt-8 space-y-3 rounded-lg border border-outline-variant bg-surface-container p-4"
             >
               <p className="text-sm font-medium text-primary">Create Admin</p>
               <Input
@@ -373,7 +374,7 @@ export default function BusinessPage() {
                 onChange={(e) =>
                   setAdminForm({ ...adminForm, name: e.target.value })
                 }
-                className="bg-black/40"
+                className="bg-surface-container-lowest border border-outline-variant input-focus-border text-on-surface"
               />
               <Input
                 placeholder="admin@email.com"
@@ -382,7 +383,7 @@ export default function BusinessPage() {
                 onChange={(e) =>
                   setAdminForm({ ...adminForm, email: e.target.value })
                 }
-                className="bg-black/40"
+                className="bg-surface-container-lowest border border-outline-variant input-focus-border text-on-surface"
               />
               <Input
                 placeholder="Password"
@@ -391,15 +392,15 @@ export default function BusinessPage() {
                 onChange={(e) =>
                   setAdminForm({ ...adminForm, password: e.target.value })
                 }
-                className="bg-black/40"
+                className="bg-surface-container-lowest border border-outline-variant input-focus-border text-on-surface"
               />
-              <Button type="submit" disabled={adminLoading}>
+              <Button type="submit" disabled={adminLoading} className="w-full bg-primary text-on-primary">
                 {adminLoading ? 'Creating...' : 'Create Admin'}
               </Button>
             </form>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
