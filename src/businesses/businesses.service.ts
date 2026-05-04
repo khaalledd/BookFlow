@@ -26,7 +26,10 @@ export class BusinessesService {
   ) {}
 
   // ─── Create ──────────────────────────────────────────────────
-  async create(ownerId: string, createBusinessDto: CreateBusinessDto): Promise<Business> {
+  async create(
+    ownerId: string,
+    createBusinessDto: CreateBusinessDto,
+  ): Promise<Business> {
     const slug = await this.generateUniqueSlug(createBusinessDto.name);
 
     const business = await this.prisma.business.create({
@@ -42,11 +45,14 @@ export class BusinessesService {
   }
 
   // ─── Find All (Public, Paginated, Filterable) ────────────────
-  async findAll(paginationDto: PaginationDto): Promise<PaginatedResult<Business>> {
+  async findAll(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Business>> {
     const { page = 1, limit = 10, category, city } = paginationDto;
 
     const cacheKey = `businesses:list:${page}:${limit}:${category || ''}:${city || ''}`;
-    const cached = await this.cacheManager.get<PaginatedResult<Business>>(cacheKey);
+    const cached =
+      await this.cacheManager.get<PaginatedResult<Business>>(cacheKey);
     if (cached) return cached;
 
     const skip = (page - 1) * limit;
@@ -61,12 +67,19 @@ export class BusinessesService {
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
-        include: { owner: { select: { id: true, name: true, avatarUrl: true } } },
+        include: {
+          owner: { select: { id: true, name: true, avatarUrl: true } },
+        },
       }),
       this.prisma.business.count({ where }),
     ]);
 
-    const result = new PaginatedResult<Business>(data as any[], total, page, limit);
+    const result = new PaginatedResult<Business>(
+      data as any[],
+      total,
+      page,
+      limit,
+    );
 
     // Cache for 5 minutes
     await this.cacheManager.set(cacheKey, result, 300000);
@@ -118,7 +131,11 @@ export class BusinessesService {
   }
 
   // ─── Update (Owner Only) ────────────────────────────────────
-  async update(id: string, userId: string, updateBusinessDto: UpdateBusinessDto): Promise<Business> {
+  async update(
+    id: string,
+    userId: string,
+    updateBusinessDto: UpdateBusinessDto,
+  ): Promise<Business> {
     const business = await this.findOne(id);
     this.assertOwnership(business, userId);
 
@@ -169,54 +186,82 @@ export class BusinessesService {
     const business = await this.findOne(id);
     this.assertOwnership(business, userId);
 
-    const nowLocal = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Cairo' }));
+    const nowLocal = new Date(
+      new Date().toLocaleString('en-US', { timeZone: 'Africa/Cairo' }),
+    );
     const yyyy = nowLocal.getFullYear();
     const mm = nowLocal.getMonth();
     const dd = nowLocal.getDate();
-    
+
     const todayStart = new Date(Date.UTC(yyyy, mm, dd));
-    
+
     // Start of week (Sunday)
     const dayOfWeek = todayStart.getUTCDay();
     const weekStartLocal = new Date(nowLocal);
     weekStartLocal.setDate(nowLocal.getDate() - dayOfWeek);
-    const weekStart = new Date(Date.UTC(weekStartLocal.getFullYear(), weekStartLocal.getMonth(), weekStartLocal.getDate()));
-    
+    const weekStart = new Date(
+      Date.UTC(
+        weekStartLocal.getFullYear(),
+        weekStartLocal.getMonth(),
+        weekStartLocal.getDate(),
+      ),
+    );
+
     // Start of month
     const monthStart = new Date(Date.UTC(yyyy, mm, 1));
 
-    const [todaysBookings, weekBookingsCount, monthBookingsCount, popularServicesData] = await Promise.all([
+    const [
+      todaysBookings,
+      weekBookingsCount,
+      monthBookingsCount,
+      popularServicesData,
+    ] = await Promise.all([
       this.prisma.booking.findMany({
-        where: { businessId: id, date: todayStart, status: { not: 'CANCELLED' } },
-        include: { customer: { select: { name: true } }, service: { select: { name: true, duration: true } } },
-        orderBy: { startTime: 'asc' }
+        where: {
+          businessId: id,
+          date: todayStart,
+          status: { not: 'CANCELLED' },
+        },
+        include: {
+          customer: { select: { name: true } },
+          service: { select: { name: true, durationMinutes: true } },
+        },
+        orderBy: { startTime: 'asc' },
       }),
       this.prisma.booking.count({
-        where: { businessId: id, date: { gte: weekStart }, status: { not: 'CANCELLED' } }
+        where: {
+          businessId: id,
+          date: { gte: weekStart },
+          status: { not: 'CANCELLED' },
+        },
       }),
       this.prisma.booking.count({
-        where: { businessId: id, date: { gte: monthStart }, status: { not: 'CANCELLED' } }
+        where: {
+          businessId: id,
+          date: { gte: monthStart },
+          status: { not: 'CANCELLED' },
+        },
       }),
       this.prisma.booking.groupBy({
         by: ['serviceId'],
         where: { businessId: id, status: { not: 'CANCELLED' } },
         _count: { id: true },
         orderBy: { _count: { id: 'desc' } },
-        take: 3
+        take: 3,
       }),
     ]);
 
     // Populate service names for popular services
-    const topServiceIds = popularServicesData.map(s => s.serviceId);
+    const topServiceIds = popularServicesData.map((s) => s.serviceId);
     const topServices = await this.prisma.service.findMany({
       where: { id: { in: topServiceIds } },
-      select: { id: true, name: true }
+      select: { id: true, name: true },
     });
 
-    const popularServices = popularServicesData.map(s => ({
+    const popularServices = popularServicesData.map((s) => ({
       serviceId: s.serviceId,
-      name: topServices.find(ts => ts.id === s.serviceId)?.name || 'Unknown',
-      count: s._count.id
+      name: topServices.find((ts) => ts.id === s.serviceId)?.name || 'Unknown',
+      count: s._count.id,
     }));
 
     return {
@@ -264,7 +309,9 @@ export class BusinessesService {
         }
       }
     } catch (err) {
-      this.logger.warn('Could not invalidate businesses cache — entries will expire naturally');
+      this.logger.warn(
+        'Could not invalidate businesses cache — entries will expire naturally',
+      );
     }
   }
 }
