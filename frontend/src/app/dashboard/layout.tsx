@@ -54,20 +54,20 @@ export default function DashboardLayout({
 
   const links = [
     { href: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
+    { href: '/dashboard/business', label: 'Business', icon: 'storefront' },
+    { href: '/dashboard/bookings', label: 'Bookings', icon: 'event_note' },
     {
       href: '/dashboard/availability',
       label: 'Calendar',
       icon: 'calendar_month',
     },
-    { href: '/dashboard/bookings', label: 'Customers', icon: 'group' },
     { href: '/dashboard/services', label: 'Services', icon: 'inventory_2' },
-    { href: '/dashboard/business', label: 'Analytics', icon: 'insights' },
   ];
 
   return (
-    <div className="flex h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-colors-surface-container-highest),_transparent_50%)] overflow-hidden">
+    <div className="flex h-screen bg-surface-container-low overflow-hidden">
       {/* SideNavBar Component */}
-      <aside className="flex flex-col h-full py-6 px-4 fixed left-0 top-0 w-64 rounded-r-2xl bg-white/40 backdrop-blur-2xl border-r border-[#35858E]/10 shadow-2xl shadow-[#35858E]/10 z-50 transition-all duration-200 ease-out">
+      <aside className="flex flex-col h-full py-6 px-4 fixed left-0 top-0 w-64 bg-white border-r border-outline-variant/40 shadow-sm z-50 transition-colors duration-200 ease-out">
         {/* Header */}
         <div className="flex items-center gap-3 px-2 mb-8">
           <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-outline-variant/30">
@@ -89,7 +89,7 @@ export default function DashboardLayout({
 
         {/* CTA */}
         <div className="px-2 mb-6">
-          <button className="w-full bg-gradient-to-r from-primary to-surface-tint hover:opacity-90 text-on-primary font-button text-button py-3 px-4 rounded-xl shadow-[0_4px_12px_rgba(0,102,111,0.2)] transition-all flex items-center justify-center gap-2">
+          <button className="w-full bg-primary hover:bg-surface-tint text-on-primary font-button text-button py-3 px-4 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2">
             <span className="material-symbols-outlined text-[18px]">add</span>
             New Appointment
           </button>
@@ -132,7 +132,7 @@ export default function DashboardLayout({
           <button
             onClick={() => {
               logout();
-              router.push('/login');
+              router.push('/');
             }}
             className="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-error-container hover:text-error rounded-lg text-sm font-medium transition-all duration-200 ease-out"
           >

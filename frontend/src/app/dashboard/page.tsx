@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/store/auth';
 import { api } from '@/lib/api';
@@ -41,22 +40,24 @@ export default function DashboardOverview() {
     return () => { mounted = false };
   }, [user]);
 
-  const hoursBooked = stats ? (stats.todaysBookings?.reduce((acc: number, b: any) => acc + (b.service?.duration || 0), 0) / 60).toFixed(1) : '0.0';
+  const hoursBooked = stats ? (stats.todaysBookings?.reduce((acc: number, b: any) => acc + (b.service?.durationMinutes || b.service?.duration || 0), 0) / 60).toFixed(1) : '0.0';
   const todayCount = stats?.todayCount || 0;
   const thisWeekCount = stats?.thisWeekCount || 0;
   const popularCount = stats?.popularServices?.reduce((acc: number, s: any) => acc + s.count, 0) || 0;
+  const statCardClass = "col-span-12 md:col-span-4 bg-white rounded-xl p-md border border-outline-variant/40 shadow-sm flex flex-col justify-between";
+  const panelClass = "bg-white rounded-xl border border-outline-variant/40 shadow-sm flex flex-col";
 
   return (
     <>
       {/* Page Header */}
-      <header className="mb-lg flex justify-between items-end">
+      <header className="mb-md flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-end">
         <div>
           <h1 className="font-h1 text-h1 text-on-surface mb-xs">Overview</h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant">
             Here is what&apos;s happening with your business today.
           </p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-white/50 backdrop-blur-[10px] rounded-full border border-outline-variant/30 text-primary font-label-sm text-label-sm shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-outline-variant/40 text-primary font-label-sm text-label-sm shadow-sm w-fit">
           <span className="material-symbols-outlined text-[18px]">
             calendar_today
           </span>
@@ -65,12 +66,11 @@ export default function DashboardOverview() {
       </header>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-12 gap-gutter">
+      <div className="grid grid-cols-12 gap-md">
         {/* Stat Cards (Top Row) */}
         {/* Card 1: Revenue */}
-        <div className="col-span-12 md:col-span-4 bg-white/60 backdrop-blur-[20px] rounded-xl p-lg border border-outline-variant/30 shadow-[0_8px_24px_rgba(0,102,111,0.04)] flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary-container/20 rounded-full blur-2xl"></div>
-          <div className="flex justify-between items-start mb-4 relative z-10">
+        <div className={statCardClass}>
+          <div className="flex justify-between items-start mb-3">
             <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">
                 schedule
@@ -84,7 +84,7 @@ export default function DashboardOverview() {
               +12%
             </span>
           </div>
-          <div className="relative z-10">
+          <div>
             <h3 className="font-h2 text-h2 text-on-surface">{loading ? "..." : `${hoursBooked}h`}</h3>
             <p className="font-label-sm text-[12px] text-outline mt-1">
               vs. yesterday
@@ -93,9 +93,8 @@ export default function DashboardOverview() {
         </div>
 
         {/* Card 2: Appointments */}
-        <div className="col-span-12 md:col-span-4 bg-white/60 backdrop-blur-[20px] rounded-xl p-lg border border-outline-variant/30 shadow-[0_8px_24px_rgba(0,102,111,0.04)] flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-tertiary-container/20 rounded-full blur-2xl"></div>
-          <div className="flex justify-between items-start mb-4 relative z-10">
+        <div className={statCardClass}>
+          <div className="flex justify-between items-start mb-3">
             <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">
                 event_available
@@ -106,26 +105,25 @@ export default function DashboardOverview() {
               Today
             </span>
           </div>
-          <div className="relative z-10">
+          <div>
             <h3 className="font-h2 text-h2 text-on-surface">{loading ? "..." : todayCount}</h3>
             <p className="font-label-sm text-[12px] text-outline mt-1">{loading ? "..." : `${thisWeekCount} this week`}</p>
           </div>
         </div>
 
         {/* Card 3: New Leads */}
-        <div className="col-span-12 md:col-span-4 bg-primary text-on-primary rounded-xl p-lg shadow-[0_8px_24px_rgba(0,102,111,0.15)] flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_20%,rgba(255,255,255,0.1)_50%,transparent_80%)] opacity-50"></div>
-          <div className="flex justify-between items-start mb-4 relative z-10">
-            <span className="font-label-sm text-label-sm text-on-primary/80 flex items-center gap-1">
+        <div className="col-span-12 md:col-span-4 bg-[#f8fbf4] rounded-xl p-md border border-[#d7dfbf] shadow-sm flex flex-col justify-between">
+          <div className="flex justify-between items-start mb-3">
+            <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">
                 visibility
               </span>
               Profile Views
             </span>
           </div>
-          <div className="relative z-10">
-            <h3 className="font-h2 text-h2 text-on-primary">{loading ? "..." : popularCount}</h3>
-            <p className="font-label-sm text-[12px] text-on-primary/70 mt-1">
+          <div>
+            <h3 className="font-h2 text-h2 text-on-surface">{loading ? "..." : popularCount}</h3>
+            <p className="font-label-sm text-[12px] text-outline mt-1">
               From social channels
             </p>
           </div>
@@ -133,8 +131,8 @@ export default function DashboardOverview() {
 
         {/* Middle Row: Social Hub & Today's Schedule */}
         {/* Your Booking Link */}
-        <div className="col-span-12 lg:col-span-8 bg-white/60 backdrop-blur-[20px] rounded-xl border border-outline-variant/30 shadow-[0_8px_32px_rgba(0,102,111,0.06)] flex flex-col overflow-hidden h-[400px]">
-          <div className="px-lg py-md border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-lowest/50">
+        <div className={`col-span-12 lg:col-span-8 overflow-hidden h-[390px] ${panelClass}`}>
+          <div className="px-md py-sm border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low">
             <h3 className="font-h3 text-h3 text-on-surface flex items-center gap-2">
               <span className="material-symbols-outlined fill text-primary">
                 link
@@ -142,51 +140,53 @@ export default function DashboardOverview() {
               Your Booking Link
             </h3>
           </div>
-          <div className="flex-1 p-lg flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center mb-6">
-              <span className="material-symbols-outlined text-primary text-3xl">
-                public
-              </span>
+          <div className="flex-1 p-md flex flex-col sm:flex-row items-stretch gap-md">
+            <div className="grid grid-cols-2 sm:grid-cols-1 gap-sm w-full sm:w-[150px] shrink-0">
+              <button className="w-full bg-primary text-on-primary hover:bg-surface-tint transition-colors flex flex-col items-center justify-center gap-2 p-3 rounded-xl shadow-sm active:scale-95 border border-primary/20">
+                <span className="material-symbols-outlined text-[30px]">qr_code_2</span>
+                <span className="text-xs font-bold text-center">Get QR Code</span>
+              </button>
+              <button className="w-full bg-[#f8dfc8] text-[#7a421d] hover:bg-[#f4d0b1] transition-colors flex flex-col items-center justify-center gap-2 p-3 rounded-xl shadow-sm active:scale-95 border border-[#e7ba91]">
+                <span className="material-symbols-outlined text-[30px]">open_in_new</span>
+                <span className="text-xs font-bold text-center">Preview Page</span>
+              </button>
             </div>
-            <h4 className="font-h2 text-h2 text-on-surface mb-2">Share your link to get booked</h4>
-            <p className="font-body-md text-on-surface-variant max-w-md mx-auto mb-8">
-              Post this link in your Instagram bio, send it in DMs, or add it to your website to let clients book you instantly.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-lg mx-auto">
-              <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
-                {businessSlug ? `scheduly.com/b/${businessSlug}` : "scheduly.com/b/your-business"}
+
+            <div className="flex-1 flex flex-col items-start justify-center border-t sm:border-t-0 sm:border-l border-outline-variant/30 pt-md sm:pt-0 sm:pl-md">
+              <div className="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center mb-4">
+                <span className="material-symbols-outlined text-primary text-3xl">
+                  public
+                </span>
               </div>
-              <button className="bg-primary hover:bg-primary-container text-on-primary font-button px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center">
-                <span className="material-symbols-outlined text-[18px]">content_copy</span>
-                Copy Link
-              </button>
-            </div>
-            
-            <div className="mt-8 flex gap-4">
-              <button className="text-outline hover:text-primary transition-colors flex flex-col items-center gap-1">
-                <span className="material-symbols-outlined">qr_code_2</span>
-                <span className="text-[12px] font-medium">Get QR Code</span>
-              </button>
-              <button className="text-outline hover:text-primary transition-colors flex flex-col items-center gap-1">
-                <span className="material-symbols-outlined">open_in_new</span>
-                <span className="text-[12px] font-medium">Preview Page</span>
-              </button>
+              <h4 className="font-h3 text-h3 text-on-surface mb-2">Share your link to get booked</h4>
+              <p className="font-body-md text-on-surface-variant max-w-xl mb-md">
+                Post this link in your Instagram bio, send it in DMs, or add it to your website to let clients book you instantly.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-xl">
+                <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
+                  {businessSlug ? `verdantbook.com/b/${businessSlug}` : "verdantbook.com/b/your-business"}
+                </div>
+                <button className="bg-primary hover:bg-surface-tint text-on-primary font-button px-5 py-3 rounded-lg shadow-sm transition-colors duration-200 active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center">
+                  <span className="material-symbols-outlined text-[18px]">content_copy</span>
+                  Copy Link
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Today's Appointments */}
-        <div className="col-span-12 lg:col-span-4 bg-white/60 backdrop-blur-[20px] rounded-xl border border-outline-variant/30 shadow-[0_8px_32px_rgba(0,102,111,0.06)] flex flex-col h-[400px]">
-          <div className="px-lg py-md border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-lowest/50">
+        <div className={`col-span-12 lg:col-span-4 h-[390px] ${panelClass}`}>
+          <div className="px-md py-sm border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low">
             <h3 className="font-h3 text-h3 text-on-surface">Schedule</h3>
             <button className="text-primary hover:bg-primary/10 p-1 rounded-full transition-colors flex items-center justify-center">
               <span className="material-symbols-outlined">more_horiz</span>
             </button>
           </div>
-                    <div className="flex-1 overflow-y-auto p-lg relative">
-            <div className="absolute left-[39px] top-lg bottom-lg w-px bg-outline-variant/30"></div>
-            <div className="flex flex-col gap-6 relative">
+          <div className="flex-1 overflow-y-auto p-md relative">
+            <div className="absolute left-[31px] top-md bottom-md w-px bg-outline-variant/30"></div>
+            <div className="flex flex-col gap-4 relative">
               {loading ? (
                 <div className="text-center text-outline-variant py-8">Loading schedule...</div>
               ) : stats?.todaysBookings?.length === 0 ? (
@@ -195,15 +195,14 @@ export default function DashboardOverview() {
                 stats?.todaysBookings?.map((booking: any, i: number) => {
                   const startTime = booking.startTime.substring(0, 5); // Format HH:MM from HH:MM:SS
                   
-                  // Alternate styling slightly for variety just like the static template
                   const isPrimary = i % 2 === 0;
                   
                   return (
-                    <div key={booking.id} className="flex gap-4 relative">
-                      <div className={`w-14 shrink-0 text-right font-label-sm text-label-sm pt-1 ${isPrimary ? 'text-primary' : 'text-outline'}`}>
+                    <div key={booking.id} className="flex gap-3 relative">
+                      <div className={`w-10 shrink-0 text-right font-label-sm text-label-sm pt-1 ${isPrimary ? 'text-primary' : 'text-outline'}`}>
                         {startTime}
                       </div>
-                      <div className={`w-3 h-3 rounded-full absolute left-[34px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10 ${isPrimary ? 'bg-primary' : 'bg-outline-variant'}`}></div>
+                      <div className={`w-3 h-3 rounded-full absolute left-[26px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10 ${isPrimary ? 'bg-primary' : 'bg-outline-variant'}`}></div>
                       
                       <div className={`flex-1 p-3 rounded-lg border transition-colors ${isPrimary ? 'bg-surface-container-low border-primary/20 shadow-sm relative overflow-hidden' : 'border-transparent hover:bg-surface-container-lowest/50'}`}>
                         {isPrimary && <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>}
@@ -233,8 +232,8 @@ export default function DashboardOverview() {
         </div>
 
         {/* Bottom Row: Lead Growth Chart */}
-        <div className="col-span-12 bg-white/60 backdrop-blur-[20px] rounded-xl border border-outline-variant/30 shadow-[0_8px_32px_rgba(0,102,111,0.06)] p-lg flex flex-col h-[300px]">
-          <div className="flex justify-between items-start mb-6">
+        <div className={`col-span-12 p-md h-[270px] ${panelClass}`}>
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start mb-4">
             <div>
               <h3 className="font-h3 text-h3 text-on-surface mb-1">Bookings & Views</h3>
               <p className="font-label-sm text-label-sm text-on-surface-variant">
