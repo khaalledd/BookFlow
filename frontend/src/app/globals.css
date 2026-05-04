@@ -67,7 +67,6 @@
 
 .input-focus-border {
   transition: all 0.2s ease;
-  border: 1px solid transparent;
 }
 .input-focus-border:focus {
   border-color: #00666f;
