@@ -115,16 +115,28 @@ export default function LandingPage() {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a className="nav-link" href="#features">
+            <a
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="#features"
+            >
               Features
             </a>
-            <a className="nav-link" href="#pricing">
+            <a
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="#pricing"
+            >
               Pricing
             </a>
-            <a className="nav-link" href="#testimonials">
+            <a
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="#testimonials"
+            >
               Reviews
             </a>
-            <a className="nav-link" href="#faq">
+            <a
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="#faq"
+            >
               FAQ
             </a>
           </div>

@@ -80,16 +80,28 @@ export default function ExplorePage() {
             </span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
-            <Link className="nav-link" href="/#features">
+            <Link
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="/#features"
+            >
               Features
             </Link>
-            <Link className="nav-link" href="/#pricing">
+            <Link
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="/#pricing"
+            >
               Pricing
             </Link>
-            <Link className="nav-link" href="/#testimonials">
+            <Link
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="/#testimonials"
+            >
               Reviews
             </Link>
-            <Link className="nav-link" href="/#faq">
+            <Link
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="/#faq"
+            >
               FAQ
             </Link>
           </div>
