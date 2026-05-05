@@ -192,7 +192,7 @@ export default function LandingPage() {
               >
                 See it in action
                 <span className="material-symbols-outlined text-xl transition-transform duration-300 group-hover:scale-110">
-                  play_circle
+                  travel_explore
                 </span>
               </Link>
             </div>
