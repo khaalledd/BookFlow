@@ -191,8 +191,8 @@ export default function LandingPage() {
                 className="group font-button text-button border border-secondary text-secondary px-8 py-4 rounded-full hover:bg-secondary-container active:scale-95 transition-all flex items-center gap-2 duration-200 w-full sm:w-auto justify-center text-center"
               >
                 See it in action
-                <span className="material-symbols-outlined text-xl transition-transform duration-300 group-hover:translate-x-1.5">
-                  arrow_forward
+                <span className="material-symbols-outlined text-xl transition-transform duration-300 group-hover:scale-110">
+                  play_circle
                 </span>
               </Link>
             </div>
