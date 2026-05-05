@@ -66,13 +66,13 @@ export default function ExplorePage() {
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-white/60 backdrop-blur-md shadow-xl shadow-[#35858E]/5 border-b border-[#35858E]/10 antialiased tracking-tight transition-all duration-300">
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm shadow-[#35858E]/5 border-b border-[#35858E]/10 antialiased tracking-tight transition-all duration-300">
         <div className="flex justify-between items-center px-8 h-20 max-w-full">
           <Link
             href="/"
             className="flex items-center gap-2 group cursor-pointer"
           >
-            <span className="material-symbols-outlined fill text-primary text-3xl group-hover:scale-110 transition-transform duration-300">
+            <span className="material-symbols-outlined fill text-primary text-3xl">
               forest
             </span>
             <span className="text-2xl font-extrabold text-[#35858E]">
@@ -80,32 +80,30 @@ export default function ExplorePage() {
             </span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
-            <Link
-              className="nav-link text-[#475569] font-medium transition-colors hover:text-primary relative"
-              href="/#features"
-            >
+            <Link className="nav-link" href="/#features">
               Features
             </Link>
-            <Link
-              className="nav-link text-primary font-bold border-b-2 border-primary pb-1"
-              href="/explore"
-            >
-              Explore
-            </Link>
-            <Link
-              className="nav-link text-[#475569] font-medium transition-colors hover:text-primary relative"
-              href="/#pricing"
-            >
+            <Link className="nav-link" href="/#pricing">
               Pricing
             </Link>
-            <Link
-              className="nav-link text-[#475569] font-medium transition-colors hover:text-primary relative"
-              href="/#faq"
-            >
+            <Link className="nav-link" href="/#testimonials">
+              Reviews
+            </Link>
+            <Link className="nav-link" href="/#faq">
               FAQ
             </Link>
           </div>
           <div className="flex items-center gap-4">
+            <Link
+              href="/explore"
+              aria-current="page"
+              className="hidden md:flex items-center gap-2 font-button text-sm font-semibold text-primary bg-primary/5 hover:bg-primary/10 px-5 py-2.5 rounded-full border border-primary/20 hover:border-primary/40 hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-sm"
+            >
+              <span className="material-symbols-outlined text-[18px]">
+                travel_explore
+              </span>
+              Explore
+            </Link>
             <Link
               href="/login"
               className="hidden md:block font-button text-button text-[#35858E] hover:text-primary-container transition-colors px-4 py-2"
@@ -114,7 +112,7 @@ export default function ExplorePage() {
             </Link>
             <Link
               href="/register"
-              className="font-button text-button bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-full shadow-md shadow-primary/20 hover:shadow-[0_0_25px_rgba(190,234,204,0.8)] hover:scale-105 active:scale-95 transition-all duration-300"
+              className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
             >
               Get Started
             </Link>

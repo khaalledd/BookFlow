@@ -99,31 +99,6 @@ export default function LandingPage() {
           opacity: 1;
           transform: translateY(0);
         }
-        .nav-link {
-          position: relative;
-          color: #475569;
-          font-weight: 500;
-          transition: color 0.3s;
-        }
-        .nav-link:hover {
-          color: #00666f; /* primary */
-        }
-        .nav-link::after {
-          content: '';
-          position: absolute;
-          width: 100%;
-          transform: scaleX(0);
-          height: 2px;
-          bottom: -4px;
-          left: 0;
-          background-color: #00666f;
-          transform-origin: bottom right;
-          transition: transform 0.3s ease-out;
-        }
-        .nav-link:hover::after {
-          transform: scaleX(1);
-          transform-origin: bottom left;
-        }
       `}</style>
 
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm shadow-[#35858E]/5 border-b border-[#35858E]/10 antialiased tracking-tight transition-all duration-300">
@@ -155,9 +130,12 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link
-              className="nav-link hidden md:block font-button font-medium text-[#475569] hover:text-primary transition-colors"
               href="/explore"
+              className="hidden md:flex items-center gap-2 font-button text-sm font-semibold text-primary bg-primary/5 hover:bg-primary/10 px-5 py-2.5 rounded-full border border-primary/20 hover:border-primary/40 hover:scale-[1.03] active:scale-95 transition-all duration-300 shadow-sm"
             >
+              <span className="material-symbols-outlined text-[18px]">
+                travel_explore
+              </span>
               Explore
             </Link>
             <Link
@@ -256,36 +234,38 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <div className="space-y-3">
-                    {['Deep Tissue Massage', 'Reset Facial', 'Coaching Call'].map(
-                      (service, index) => (
-                        <div
-                          key={service}
-                          className={`rounded-xl border p-4 ${
-                            index === 0
-                              ? 'border-primary/40 bg-white shadow-sm'
-                              : 'border-outline-variant/30 bg-white/70'
-                          }`}
-                        >
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <p className="font-label-sm text-on-surface">
-                                {service}
-                              </p>
-                              <p className="text-xs text-on-surface-variant mt-1">
-                                {index === 2 ? '45 min' : '60 min'}
-                              </p>
-                            </div>
-                            <span
-                              className={`text-xs font-bold ${
-                                index === 1 ? 'text-[#8a5b1f]' : 'text-primary'
-                              }`}
-                            >
-                              ${index === 1 ? '65' : index === 2 ? '90' : '80'}
-                            </span>
+                    {[
+                      'Deep Tissue Massage',
+                      'Reset Facial',
+                      'Coaching Call',
+                    ].map((service, index) => (
+                      <div
+                        key={service}
+                        className={`rounded-xl border p-4 ${
+                          index === 0
+                            ? 'border-primary/40 bg-white shadow-sm'
+                            : 'border-outline-variant/30 bg-white/70'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <p className="font-label-sm text-on-surface">
+                              {service}
+                            </p>
+                            <p className="text-xs text-on-surface-variant mt-1">
+                              {index === 2 ? '45 min' : '60 min'}
+                            </p>
                           </div>
+                          <span
+                            className={`text-xs font-bold ${
+                              index === 1 ? 'text-[#8a5b1f]' : 'text-primary'
+                            }`}
+                          >
+                            ${index === 1 ? '65' : index === 2 ? '90' : '80'}
+                          </span>
                         </div>
-                      ),
-                    )}
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div className="p-6 bg-white">
@@ -311,7 +291,9 @@ export default function LandingPage() {
                       <div
                         key={label}
                         className={`rounded-xl border border-outline-variant/30 p-3 ${
-                          index === 1 ? 'bg-[#f7fbeb]' : 'bg-surface-container-low'
+                          index === 1
+                            ? 'bg-[#f7fbeb]'
+                            : 'bg-surface-container-low'
                         }`}
                       >
                         <p className="text-[11px] text-on-surface-variant">
@@ -573,9 +555,7 @@ export default function LandingPage() {
                 href="/explore"
                 className="px-8 py-3 rounded-full bg-surface-container-highest text-on-surface font-button text-button hover:bg-surface-dim transition-colors inline-flex items-center justify-center gap-2 group"
               >
-                <span className="material-symbols-outlined">
-                  search
-                </span>
+                <span className="material-symbols-outlined">search</span>
                 Explore all categories
               </Link>
             </div>
@@ -777,8 +757,9 @@ export default function LandingPage() {
                 </span>
               </div>
               <p className="font-body-lg text-on-surface mb-8 flex-grow">
-                &quot;My booking page makes my photography business look polished.
-                Clients constantly compliment how easy it is to book me.&quot;
+                &quot;My booking page makes my photography business look
+                polished. Clients constantly compliment how easy it is to book
+                me.&quot;
               </p>
               <div className="flex items-center gap-4 mt-auto">
                 <Image
