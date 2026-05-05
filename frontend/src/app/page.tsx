@@ -179,18 +179,21 @@ export default function LandingPage() {
             <div className="reveal-base flex flex-col sm:flex-row items-center gap-4 pt-2">
               <Link
                 href="/register"
-                className="bg-primary text-on-primary font-button text-button px-8 py-4 rounded-full hover:bg-surface-tint active:scale-95 transition-all flex items-center gap-2 w-full sm:w-auto justify-center duration-200 shadow-sm"
+                className="group bg-primary text-on-primary font-button text-button px-8 py-4 rounded-full hover:bg-surface-tint active:scale-95 transition-all flex items-center gap-2 w-full sm:w-auto justify-center duration-200 shadow-sm"
               >
                 Claim your free page
-                <span className="material-symbols-outlined text-xl">
+                <span className="material-symbols-outlined text-xl transition-transform duration-300 group-hover:translate-x-1.5">
                   arrow_forward
                 </span>
               </Link>
               <Link
                 href="/explore"
-                className="font-button text-button border border-secondary text-secondary px-8 py-4 rounded-full hover:bg-secondary-container transition-colors duration-200 w-full sm:w-auto text-center"
+                className="group font-button text-button border border-secondary text-secondary px-8 py-4 rounded-full hover:bg-secondary-container active:scale-95 transition-all flex items-center gap-2 duration-200 w-full sm:w-auto justify-center text-center"
               >
                 See it in action
+                <span className="material-symbols-outlined text-xl transition-transform duration-300 group-hover:translate-x-1.5">
+                  arrow_forward
+                </span>
               </Link>
             </div>
 
