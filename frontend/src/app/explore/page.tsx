@@ -88,6 +88,12 @@ export default function ExplorePage() {
             </Link>
             <Link
               className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="/#solutions"
+            >
+              Solutions
+            </Link>
+            <Link
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
               href="/#pricing"
             >
               Pricing

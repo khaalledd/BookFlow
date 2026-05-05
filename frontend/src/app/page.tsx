@@ -123,6 +123,12 @@ export default function LandingPage() {
             </a>
             <a
               className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
+              href="#solutions"
+            >
+              Solutions
+            </a>
+            <a
+              className="text-[17px] font-medium text-slate-600 hover:text-primary transition-colors"
               href="#pricing"
             >
               Pricing
@@ -349,7 +355,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="features" className="space-y-16" data-reveal>
+        <section id="features" className="space-y-16 scroll-mt-32" data-reveal>
           <div className="reveal-base text-center max-w-2xl mx-auto">
             <h2 className="font-h2 text-h2 text-on-background mb-4">
               From Chaos to Clarity
@@ -458,7 +464,7 @@ export default function LandingPage() {
         </section>
 
         <section
-          className="relative z-10 py-24 bg-surface-container-low/50"
+          className="relative z-10 py-24 bg-surface-container-low/50 scroll-mt-24"
           id="solutions"
           data-reveal
         >
@@ -571,7 +577,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="pricing" className="space-y-16" data-reveal>
+        <section id="pricing" className="space-y-16 scroll-mt-32" data-reveal>
           <div className="reveal-base text-center max-w-2xl mx-auto">
             <h2 className="font-h2 text-h2 text-on-background mb-4">
               Simple &amp; Transparent Pricing
@@ -691,7 +697,11 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="testimonials" className="space-y-16" data-reveal>
+        <section
+          id="testimonials"
+          className="space-y-16 scroll-mt-32"
+          data-reveal
+        >
           <div className="reveal-base flex flex-col items-center text-center mb-8 gap-4 pb-6">
             <h2 className="font-h2 text-h2 text-on-background mb-2">
               Loved by Professionals
@@ -834,7 +844,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="faq" className="space-y-12" data-reveal>
+        <section id="faq" className="space-y-12 scroll-mt-32" data-reveal>
           <div className="reveal-base flex flex-col items-center text-center mb-8 gap-4 pb-2">
             <h2 className="font-h2 text-h2 text-on-background mb-2">
               Frequently Asked Questions
