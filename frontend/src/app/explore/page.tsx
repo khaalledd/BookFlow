@@ -105,12 +105,6 @@ export default function ExplorePage() {
               Explore
             </Link>
             <Link
-              href="/login"
-              className="hidden md:block font-button text-button text-[#35858E] hover:text-primary-container transition-colors px-4 py-2"
-            >
-              Login
-            </Link>
-            <Link
               href="/register"
               className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
             >
@@ -366,6 +360,12 @@ export default function ExplorePage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-6 md:justify-end">
+            <Link
+              className="font-sans text-xs uppercase tracking-widest text-slate-400 hover:text-[#35858E] underline-offset-4 opacity-100 hover:opacity-80 transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#35858E] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-right hover:after:origin-left"
+              href="/login"
+            >
+              Login
+            </Link>
             <Link
               className="font-sans text-xs uppercase tracking-widest text-slate-400 hover:text-[#35858E] underline-offset-4 opacity-100 hover:opacity-80 transition-all duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#35858E] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-right hover:after:origin-left"
               href="#"
