@@ -73,10 +73,11 @@ export default function ServicesBookingPage() {
 
   useEffect(() => {
     if (isHydrated && isAuthenticated && user) {
-      setGuestData(prev => ({
+      setGuestData((prev) => ({
         ...prev,
         name: user.name || prev.name,
         email: user.email || prev.email,
+        phone: user.phone || prev.phone,
       }));
     }
   }, [isHydrated, isAuthenticated, user]);
@@ -103,6 +104,11 @@ export default function ServicesBookingPage() {
   const submitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!business || !selectedService || !selectedDate || !selectedSlot) return;
+    if (!isHydrated) {
+      setBookingStatus('ERROR');
+      setErrorMsg('Please wait a moment and try again.');
+      return;
+    }
 
     setBookingStatus('PROCESSING');
     setErrorMsg('');
@@ -129,8 +135,12 @@ export default function ServicesBookingPage() {
       setCurrentStep(4); // Success Step
     } catch (err: any) {
       setBookingStatus('ERROR');
+      const apiMessage = err.response?.data?.message;
+      const normalizedMessage = Array.isArray(apiMessage)
+        ? apiMessage[0]
+        : apiMessage;
       setErrorMsg(
-        err.response?.data?.message ||
+        normalizedMessage ||
           'Failed to secure your booking. The slot might be taken.',
       );
     }
@@ -717,7 +727,7 @@ export default function ServicesBookingPage() {
                       <div className="flex justify-between items-center text-on-surface font-h3 text-xl pt-2">
                         <span>Total Due Now</span>
                         <span className="text-primary">
-                          {selectedService.currency} 0.00
+                          {selectedService.currency} {selectedService.price}
                         </span>
                       </div>
                       <p className="text-xs text-on-surface-variant text-center pt-2">
