@@ -302,7 +302,7 @@ export default function ExplorePage() {
                     className="glass-panel bg-surface-container-lowest/80 rounded-xl overflow-hidden border-outline-variant/20 hover:shadow-[0_8px_30px_-4px_rgba(0,102,111,0.12)] transition-all duration-300 flex flex-col group"
                   >
                     <div className="relative h-56 overflow-hidden">
-                      <Link href={`/b/${business.slug}`}>
+                      <Link href={`/book/${business.slug}`}>
                         <Image
                           width={800}
                           height={600}
@@ -337,7 +337,7 @@ export default function ExplorePage() {
                           <span className="font-label-sm text-xs tracking-wider uppercase text-secondary mb-1 block">
                             {business.category.replace('_', ' ')}
                           </span>
-                          <Link href={`/b/${business.slug}`}>
+                          <Link href={`/book/${business.slug}`}>
                             <h3 className="font-h3 text-h3 text-on-surface leading-tight group-hover:text-primary transition-colors cursor-pointer">
                               {business.name}
                             </h3>
@@ -355,7 +355,7 @@ export default function ExplorePage() {
                           <span>{business.city}</span>
                         </div>
                         <Link
-                          href={`/b/${business.slug}`}
+                          href={`/book/${business.slug}`}
                           className="font-button text-button bg-primary text-on-primary px-8 py-2.5 rounded-lg hover:bg-primary-container transition-colors active:scale-95 shadow-sm text-center"
                         >
                           View
