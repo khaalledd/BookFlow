@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/store/auth';
 import { api } from '@/lib/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Calendar, Clock, LogOut, User } from 'lucide-react';
 
 interface Booking {
   id: string;
@@ -14,13 +12,11 @@ interface Booking {
   startTime: string;
   status: string;
   service: {
-    id: string;
     name: string;
-    durationMinutes: number;
     price: number;
+    durationMinutes: number;
   };
   business: {
-    id: string;
     name: string;
     slug: string;
   };
@@ -28,202 +24,207 @@ interface Booking {
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, isAuthenticated, isHydrated, logout, setUser } = useAuth();
+  const { user, isAuthenticated, isHydrated, logout } = useAuth();
+
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isHydrated) return;
-
     if (!isAuthenticated) {
       router.push('/login');
       return;
     }
 
-    // Redirect business owners to dashboard
-    if (user?.role === 'BUSINESS_OWNER') {
-      router.push('/dashboard');
-      return;
-    }
-
-    // Fetch customer bookings
-    async function fetchBookings() {
+    const fetchBookings = async () => {
       try {
         const res = await api.get('/bookings/mine');
-        // Response: { data: { data: [...], meta: {...} }, statusCode }
-        const bookingsData =
-          res.data.data?.data || res.data.data || res.data || [];
-        setBookings(Array.isArray(bookingsData) ? bookingsData : []);
+        const data = res.data?.data || res.data;
+        setBookings(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Failed to fetch bookings', err);
-        setBookings([]);
       } finally {
         setLoading(false);
       }
-    }
-
+    };
     fetchBookings();
-  }, [isHydrated, isAuthenticated, user, router]);
+  }, [isHydrated, isAuthenticated, router]);
 
-  const handleAvatarUpload = async (file: File) => {
-    const form = new FormData();
-    form.append('file', file);
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case 'CONFIRMED':
+        return 'text-primary bg-primary-container/30 border-primary/20';
+      case 'PENDING':
+        return 'text-[#8a5b1f] bg-[#f8dfc8] border-[#e7ba91]';
+      case 'CANCELLED':
+        return 'text-error bg-error-container/30 border-error/20';
+      case 'COMPLETED':
+        return 'text-tertiary bg-tertiary-container/30 border-tertiary/20';
+      default:
+        return 'text-outline bg-surface-container-low border-outline-variant/30';
+    }
+  };
 
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  const handleCancelBooking = async (bookingId: string) => {
+    if (!confirm('Are you sure you want to cancel this booking?')) return;
+    
     try {
-      const res = await api.post('/uploads/avatar', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      const avatarUrl = res.data.data?.url || res.data.url;
-      if (avatarUrl && user) {
-        setUser({ ...user, avatarUrl });
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Failed to upload avatar');
+      await api.patch(`/bookings/${bookingId}/cancel`);
+      setBookings((prev) =>
+        prev.map((b) =>
+          b.id === bookingId ? { ...b, status: 'CANCELLED' } : b
+        )
+      );
+    } catch (err: any) {
+      console.error('Failed to cancel booking', err);
+      alert(err.response?.data?.message || 'Failed to cancel booking');
     }
   };
 
   if (!isHydrated || !isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'CONFIRMED':
-        return 'text-green-400 bg-green-400/10';
-      case 'PENDING':
-        return 'text-yellow-400 bg-yellow-400/10';
-      case 'CANCELLED':
-        return 'text-red-400 bg-red-400/10';
-      case 'COMPLETED':
-        return 'text-blue-400 bg-blue-400/10';
-      default:
-        return 'text-muted-foreground bg-white/5';
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-soft">
       {/* Header */}
-      <header className="border-b border-white/10 bg-card/30 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto px-6 py-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-heading font-bold text-white">
-              Welcome, {user?.name?.split(' ')[0]}
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">{user?.email}</p>
-            <div className="mt-3 flex items-center gap-3">
-              <label className="inline-flex h-11 cursor-pointer items-center justify-center rounded-md border border-primary/40 bg-primary/15 px-5 text-sm font-semibold text-primary transition-all hover:bg-primary/25">
-                Upload Avatar
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) handleAvatarUpload(file);
-                  }}
-                />
-              </label>
-              {user?.avatarUrl && (
-                <a
-                  href={user.avatarUrl}
-                  target="_blank"
-                  className="text-xs text-muted-foreground hover:text-primary"
-                >
-                  View Avatar
-                </a>
-              )}
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm shadow-[#35858E]/5 border-b border-[#35858E]/10">
+        <div className="flex justify-between items-center px-8 h-20 max-w-7xl mx-auto">
+          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
+            <span className="material-symbols-outlined fill text-primary text-3xl">forest</span>
+            <span className="text-2xl font-extrabold text-[#35858E]">VerdantBook</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/explore"
+              className="hidden md:flex items-center gap-2 font-button text-sm font-semibold text-primary bg-primary/5 hover:bg-primary/10 px-5 py-2.5 rounded-full border border-primary/20 hover:border-primary/40 transition-all"
+            >
+              <span className="material-symbols-outlined text-[18px]">travel_explore</span>
+              Explore
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 font-button text-sm font-semibold text-error hover:bg-error/10 px-5 py-2.5 rounded-full border border-error/20 transition-all"
+            >
+              <span className="material-symbols-outlined text-[18px]">logout</span>
+              Log out
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="pt-28 pb-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        {/* Profile Header */}
+        <section className="mb-10">
+          <div className="glass-panel bg-white rounded-3xl p-8 border border-outline-variant/30">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              <div className="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center text-primary shrink-0 shadow-md border-2 border-primary/20">
+                <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>person</span>
+              </div>
+              <div className="text-center sm:text-left flex-1">
+                <h1 className="font-h2 text-3xl text-on-surface mb-1">{user?.name}</h1>
+                <p className="font-body-md text-on-surface-variant">{user?.email}</p>
+              </div>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-destructive"
-            onClick={() => {
-              logout();
-              router.push('/');
-            }}
-          >
-            <LogOut size={18} className="mr-2" />
-            Logout
-          </Button>
-        </div>
-      </header>
+        </section>
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 py-8">
-        <Card className="bg-card/40 border-white/10 backdrop-blur-md">
-          <CardHeader>
-            <CardTitle className="text-xl font-heading text-primary flex items-center gap-2">
-              <Calendar size={20} />
-              My Bookings
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="h-24 bg-white/5 rounded-lg animate-pulse"
-                  />
-                ))}
+        {/* Bookings Section */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>calendar_month</span>
+            <h2 className="font-h3 text-2xl text-on-surface">My Bookings</h2>
+            <span className="ml-auto bg-primary-container/50 text-primary font-label-sm text-xs px-3 py-1 rounded-full font-bold">
+              {bookings.length} total
+            </span>
+          </div>
+
+          {loading ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-40 bg-surface-container-low rounded-2xl animate-pulse border border-outline-variant/20" />
+              ))}
+            </div>
+          ) : bookings.length === 0 ? (
+            <div className="glass-panel bg-surface-container-lowest/50 rounded-3xl p-12 text-center border-dashed border-2 border-outline-variant/40 flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6 border border-outline-variant/50 shadow-sm">
+                <span className="material-symbols-outlined text-4xl text-outline-variant">calendar_today</span>
               </div>
-            ) : bookings.length === 0 ? (
-              <div className="text-center py-12">
-                <User
-                  size={48}
-                  className="mx-auto text-muted-foreground/30 mb-4"
-                />
-                <p className="text-muted-foreground mb-4">
-                  You haven&apos;t made any bookings yet.
-                </p>
-                <Button onClick={() => router.push('/')}>
-                  Explore Businesses
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {bookings.map((booking) => (
-                  <div
-                    key={booking.id}
-                    className="p-4 bg-black/30 rounded-lg border border-white/5 hover:border-white/10 transition-colors"
-                  >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold text-white">
-                          {booking.service.name}
-                        </h3>
-                        <p className="text-sm text-primary font-medium mt-1">
-                          {booking.business.name}
-                        </p>
-                        <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Calendar size={14} />
-                            {booking.date}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock size={14} />
-                            {booking.startTime}
-                          </span>
-                        </div>
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}
-                      >
+              <h3 className="font-h3 text-2xl text-on-surface mb-3">No bookings yet</h3>
+              <p className="font-body-md text-on-surface-variant mb-8 max-w-md">
+                Looks like you haven&apos;t scheduled any appointments. Discover top-rated professionals and book your next experience.
+              </p>
+              <Link
+                href="/explore"
+                className="font-button text-button bg-primary text-on-primary px-8 py-4 rounded-full shadow-md hover:shadow-lg hover:bg-surface-tint active:scale-95 transition-all duration-200 inline-flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-[20px]">search</span>
+                Explore Services
+              </Link>
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2">
+              {bookings.map((booking) => (
+                <div
+                  key={booking.id}
+                  className="glass-panel bg-white rounded-2xl p-6 border border-outline-variant/30 hover:border-primary/30 hover:shadow-[0_8px_30px_-4px_rgba(0,102,111,0.08)] transition-all duration-300 relative overflow-hidden group flex flex-col"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <span className={`px-3 py-1 rounded-full font-label-sm text-[11px] font-bold tracking-wide uppercase border ${getStatusStyle(booking.status)}`}>
                         {booking.status}
                       </span>
                     </div>
+                    <div className="text-right">
+                      <p className="font-h3 text-xl text-on-surface">${booking.service.price}</p>
+                      <p className="text-xs text-outline font-medium">{booking.service.durationMinutes} min</p>
+                    </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+
+                  <div className="flex-grow">
+                    <h3 className="font-h3 text-xl text-on-surface mb-2 group-hover:text-primary transition-colors leading-tight">
+                      {booking.service.name}
+                    </h3>
+                    <Link href={`/book/${booking.business.slug}`} className="font-body-sm font-medium text-secondary hover:underline flex items-center gap-1.5 mb-6 w-fit hover:text-secondary-container">
+                      <span className="material-symbols-outlined text-[16px]">storefront</span>
+                      {booking.business.name}
+                    </Link>
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-4 border-t border-outline-variant/20 mt-auto">
+                    <div className="flex-1 flex items-center justify-center gap-2 font-label-sm text-on-surface-variant bg-surface-container-lowest py-2 rounded-xl border border-outline-variant/40">
+                      <span className="material-symbols-outlined text-[16px] text-primary">calendar_month</span>
+                      {booking.date}
+                    </div>
+                    <div className="flex-1 flex items-center justify-center gap-2 font-label-sm text-on-surface-variant bg-surface-container-lowest py-2 rounded-xl border border-outline-variant/40">
+                      <span className="material-symbols-outlined text-[16px] text-primary">schedule</span>
+                      {booking.startTime}
+                    </div>
+                  </div>
+                  
+                  {booking.status !== 'CANCELLED' && booking.status !== 'COMPLETED' && (
+                    <button
+                      onClick={() => handleCancelBooking(booking.id)}
+                      className="mt-4 w-full border border-error/30 text-error hover:bg-error/10 font-button text-button py-2 rounded-xl transition-colors flex items-center justify-center gap-2"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">cancel</span>
+                      Cancel Booking
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );
