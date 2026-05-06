@@ -13,7 +13,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const { login } = useAuth();
 
-  const [role, setRole] = useState<'CUSTOMER' | 'BUSINESS_OWNER'>('CUSTOMER');
+  const [role, setRole] = useState<'CUSTOMER' | 'BUSINESS_OWNER'>('BUSINESS_OWNER');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -106,17 +106,6 @@ export default function RegisterPage() {
                 <div className="flex gap-2 p-1 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/30">
                   <button
                     type="button"
-                    onClick={() => setRole('CUSTOMER')}
-                    className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
-                      role === 'CUSTOMER'
-                        ? 'bg-primary text-on-primary shadow-sm'
-                        : 'text-on-surface-variant hover:text-on-surface'
-                    }`}
-                  >
-                    Customer
-                  </button>
-                  <button
-                    type="button"
                     onClick={() => setRole('BUSINESS_OWNER')}
                     className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
                       role === 'BUSINESS_OWNER'
@@ -125,6 +114,17 @@ export default function RegisterPage() {
                     }`}
                   >
                     Business Owner
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole('CUSTOMER')}
+                    className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
+                      role === 'CUSTOMER'
+                        ? 'bg-primary text-on-primary shadow-sm'
+                        : 'text-on-surface-variant hover:text-on-surface'
+                    }`}
+                  >
+                    Customer
                   </button>
                 </div>
 

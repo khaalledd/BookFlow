@@ -127,14 +127,14 @@ export default function ExplorePage() {
             {isHydrated && isAuthenticated ? (
               <Link
                 href={user?.role === 'CUSTOMER' ? '/profile' : '/dashboard'}
-                className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
+                className="font-button text-button bg-primary text-on-primary px-8 py-3.5 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200 text-base"
               >
                 {user?.role === 'CUSTOMER' ? 'Profile' : 'Dashboard'}
               </Link>
             ) : (
               <Link
-                href="/register"
-                className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
+                href="/login"
+                className="font-button text-button bg-primary text-on-primary px-8 py-3.5 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200 text-base"
               >
                 Get Started
               </Link>

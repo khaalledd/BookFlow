@@ -168,7 +168,7 @@ export default function LandingPage() {
               </Link>
             ) : (
               <Link
-                href="/register"
+                href="/login"
                 className="font-button text-button bg-primary text-on-primary px-8 py-3.5 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200 text-base"
               >
                 Get Started
