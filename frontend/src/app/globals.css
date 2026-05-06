@@ -124,3 +124,9 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Hide default password reveal eye icon in Edge/IE/some Webkit */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}

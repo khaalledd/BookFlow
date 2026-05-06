@@ -19,6 +19,7 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,7 +124,7 @@ export default function LoginPage() {
                   <div className="relative">
                     <Input
                       id="password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       required
                       value={formData.password}
@@ -132,8 +133,11 @@ export default function LoginPage() {
                       }
                       className="w-full bg-surface-container-lowest border border-outline-variant/50 px-md py-sm rounded-lg input-focus-border font-body-md text-on-surface placeholder:text-outline-variant pr-10"
                     />
-                    <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface-variant cursor-pointer text-[20px] transition-colors">
-                      visibility
+                    <span 
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface-variant cursor-pointer text-[20px] transition-colors select-none"
+                    >
+                      {showPassword ? "visibility_off" : "visibility"}
                     </span>
                   </div>
                 </div>
