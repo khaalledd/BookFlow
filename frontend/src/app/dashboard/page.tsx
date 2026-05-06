@@ -16,6 +16,7 @@ export default function DashboardOverview() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [businessSlug, setBusinessSlug] = useState<string>('');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -167,9 +168,19 @@ export default function DashboardOverview() {
                 <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
                   {businessSlug ? `verdantbook.com/book/${businessSlug}` : "verdantbook.com/book/your-business"}
                 </div>
-                <button className="bg-primary hover:bg-surface-tint text-on-primary font-button px-5 py-3 rounded-lg shadow-sm transition-colors duration-200 active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center">
-                  <span className="material-symbols-outlined text-[18px]">content_copy</span>
-                  Copy Link
+                <button 
+                  onClick={() => {
+                    const url = businessSlug ? `verdantbook.com/book/${businessSlug}` : "verdantbook.com/book/your-business";
+                    navigator.clipboard.writeText(url);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="bg-primary hover:bg-surface-tint text-on-primary font-button px-5 py-3 rounded-lg shadow-sm transition-colors duration-200 active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center"
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    {copied ? 'check' : 'content_copy'}
+                  </span>
+                  {copied ? 'Copied!' : 'Copy Link'}
                 </button>
               </div>
             </div>
