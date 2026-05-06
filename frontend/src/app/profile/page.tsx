@@ -40,8 +40,13 @@ export default function ProfilePage() {
     const fetchBookings = async () => {
       try {
         const res = await api.get('/bookings/mine');
-        const data = res.data?.data || res.data;
-        setBookings(Array.isArray(data) ? data : []);
+        const payload = res.data?.data || res.data;
+        const bookingsData = Array.isArray(payload?.data)
+          ? payload.data
+          : Array.isArray(payload)
+            ? payload
+            : [];
+        setBookings(bookingsData);
       } catch (err) {
         console.error('Failed to fetch bookings', err);
       } finally {
