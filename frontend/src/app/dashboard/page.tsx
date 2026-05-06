@@ -165,7 +165,7 @@ export default function DashboardOverview() {
               
               <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-xl">
                 <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
-                  {businessSlug ? `verdantbook.com/b/${businessSlug}` : "verdantbook.com/b/your-business"}
+                  {businessSlug ? `verdantbook.com/book/${businessSlug}` : "verdantbook.com/book/your-business"}
                 </div>
                 <button className="bg-primary hover:bg-surface-tint text-on-primary font-button px-5 py-3 rounded-lg shadow-sm transition-colors duration-200 active:scale-95 flex items-center gap-2 whitespace-nowrap w-full sm:w-auto justify-center">
                   <span className="material-symbols-outlined text-[18px]">content_copy</span>
@@ -185,7 +185,7 @@ export default function DashboardOverview() {
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-md relative">
-            <div className="absolute left-[31px] top-md bottom-md w-px bg-outline-variant/30"></div>
+            <div className="absolute left-[72px] top-md bottom-md w-px bg-outline-variant/30"></div>
             <div className="flex flex-col gap-4 relative">
               {loading ? (
                 <div className="text-center text-outline-variant py-8">Loading schedule...</div>
@@ -198,11 +198,11 @@ export default function DashboardOverview() {
                   const isPrimary = i % 2 === 0;
                   
                   return (
-                    <div key={booking.id} className="flex gap-3 relative">
-                      <div className={`w-10 shrink-0 text-right font-label-sm text-label-sm pt-1 ${isPrimary ? 'text-primary' : 'text-outline'}`}>
+                    <div key={booking.id} className="flex gap-4 relative">
+                      <div className={`w-12 shrink-0 text-right font-label-sm text-label-sm pt-1 ${isPrimary ? 'text-primary' : 'text-outline'}`}>
                         {startTime}
                       </div>
-                      <div className={`w-3 h-3 rounded-full absolute left-[26px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10 ${isPrimary ? 'bg-primary' : 'bg-outline-variant'}`}></div>
+                      <div className={`w-3 h-3 rounded-full absolute left-[50px] top-2 outline outline-4 outline-surface-container-lowest shadow-sm z-10 ${isPrimary ? 'bg-primary' : 'bg-outline-variant'}`}></div>
                       
                       <div className={`flex-1 p-3 rounded-lg border transition-colors ${isPrimary ? 'bg-surface-container-low border-primary/20 shadow-sm relative overflow-hidden' : 'border-transparent hover:bg-surface-container-lowest/50'}`}>
                         {isPrimary && <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>}

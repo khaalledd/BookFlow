@@ -141,7 +141,7 @@ export default function AvailabilityPage() {
                 className={`flex flex-col sm:flex-row sm:items-center gap-4 p-4 rounded-xl border transition-colors shadow-sm ${
                   day.active
                     ? 'bg-surface-container-low border-primary/30'
-                    : 'bg-surface-container-lowest/50 border-outline-variant/30 opacity-60'
+                    : 'bg-surface-container border-outline-variant/50 opacity-80'
                 }`}
               >
                 <div className="w-40 flex items-center gap-3">
@@ -152,7 +152,7 @@ export default function AvailabilityPage() {
                     className="w-4 h-4 accent-primary"
                   />
                   <Label
-                    className={`font-semibold ${day.active ? 'text-on-surface' : 'text-outline-variant'}`}
+                    className={`font-semibold ${day.active ? 'text-on-surface' : 'text-on-surface-variant'}`}
                   >
                     {day.name}
                   </Label>
