@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -25,10 +25,41 @@ interface Booking {
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, isAuthenticated, isHydrated, logout } = useAuth();
+  const { user, setUser, isAuthenticated, isHydrated, logout } = useAuth();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    setUploading(true);
+
+    try {
+      const res = await api.post('/uploads/avatar', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      const newAvatarUrl = res.data.data?.url || res.data.url;
+      if (user) {
+        setUser({ ...user, avatarUrl: newAvatarUrl });
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.response?.data?.message || 'Failed to upload avatar');
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -146,9 +177,27 @@ export default function ProfilePage() {
                   alt="Profile Avatar"
                   width={192}
                   height={192}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity ${uploading ? 'opacity-50' : ''}`}
                 />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="bg-white/90 text-primary p-3 rounded-full hover:scale-110 transition-transform shadow-md"
+                  >
+                    <span className="material-symbols-outlined text-[24px]">
+                      {uploading ? 'hourglass_empty' : 'photo_camera'}
+                    </span>
+                  </button>
+                </div>
               </div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
 
               {/* User Info */}
               <div className="text-center md:text-left flex-1 mb-2">
@@ -162,15 +211,17 @@ export default function ProfilePage() {
               {/* Action Buttons */}
               <div className="flex gap-3 mb-2 w-full md:w-auto">
                 {user?.role === 'BUSINESS_OWNER' && (
-                  <Link href="/dashboard" className="flex-1 md:flex-none font-button bg-primary text-on-primary px-6 py-3 rounded-full hover:bg-surface-tint active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
-                    <span className="material-symbols-outlined text-[20px]">dashboard</span>
-                    Dashboard
-                  </Link>
+                  <>
+                    <Link href="/dashboard" className="flex-1 md:flex-none font-button bg-primary text-on-primary px-6 py-3 rounded-full hover:bg-surface-tint active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
+                      <span className="material-symbols-outlined text-[20px]">dashboard</span>
+                      Dashboard
+                    </Link>
+                    <Link href="/dashboard/settings" className="flex-1 md:flex-none font-button bg-primary-container/10 text-primary border border-primary/20 px-6 py-3 rounded-full hover:bg-primary/10 active:scale-95 transition-all flex items-center justify-center gap-2">
+                      <span className="material-symbols-outlined text-[20px]">edit</span>
+                      Edit Profile
+                    </Link>
+                  </>
                 )}
-                <Link href="/dashboard/settings" className="flex-1 md:flex-none font-button bg-primary-container/10 text-primary border border-primary/20 px-6 py-3 rounded-full hover:bg-primary/10 active:scale-95 transition-all flex items-center justify-center gap-2">
-                  <span className="material-symbols-outlined text-[20px]">edit</span>
-                  Edit Profile
-                </Link>
               </div>
             </div>
           </div>
