@@ -74,7 +74,7 @@ export default function DashboardLayout({
             <Image width={40} height={40}
               alt="Business Owner"
               className="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO0N69FtsBkCbiTZ0ftfa6e886BgpQ_jCL2VVBxdS-EcFDSaPwtPZtsBg62aYpcIHv-B_6MztyyONBdkcnP47tLWMuiwVnLmf_c7lRZmz-VlPk6nXMboj1E9uOI7r5firUn8gYvlS8yw1IQeHnopIPKHdt5YYTPk7iwICnHrSBqHdZiJgIntePfHFKZTtQlyj1AMvzPz8zlUqexSlSMAFxAlagdpsuEKTky6h7m6R2Qcy6hUX1cb7bVHkbZKjcq8w5VaorB9EhRXQ-"
+              src={user?.avatarUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuBO0N69FtsBkCbiTZ0ftfa6e886BgpQ_jCL2VVBxdS-EcFDSaPwtPZtsBg62aYpcIHv-B_6MztyyONBdkcnP47tLWMuiwVnLmf_c7lRZmz-VlPk6nXMboj1E9uOI7r5firUn8gYvlS8yw1IQeHnopIPKHdt5YYTPk7iwICnHrSBqHdZiJgIntePfHFKZTtQlyj1AMvzPz8zlUqexSlSMAFxAlagdpsuEKTky6h7m6R2Qcy6hUX1cb7bVHkbZKjcq8w5VaorB9EhRXQ-"}
             />
           </div>
           <div className="flex flex-col">
@@ -123,7 +123,7 @@ export default function DashboardLayout({
         {/* Footer Navigation */}
         <div className="mt-auto pt-4 border-t border-[#35858E]/10 flex flex-col gap-1">
           <Link
-            href="#"
+            href="/dashboard/settings"
             className="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-[#35858E]/5 rounded-lg text-sm font-medium transition-all duration-200 ease-out"
           >
             <span className="material-symbols-outlined">settings</span>
