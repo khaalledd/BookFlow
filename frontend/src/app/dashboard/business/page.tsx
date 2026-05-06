@@ -174,7 +174,7 @@ export default function BusinessPage() {
 
   const handleCopyPublicLink = async () => {
     if (!business?.slug || typeof window === 'undefined') return;
-    const url = `${window.location.origin}/b/${business.slug}`;
+    const url = `${window.location.origin}/book/${business.slug}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -299,14 +299,14 @@ export default function BusinessPage() {
                 </p>
                 <div className="mt-2 flex items-center gap-2">
                   <a
-                    href={`/b/${business.slug}`}
+                    href={`/book/${business.slug}`}
                     target="_blank"
                     className="text-xs text-primary font-bold hover:underline break-all"
                   >
                     {typeof window !== 'undefined'
                       ? window.location.origin
                       : ''}
-                    /b/{business.slug}
+                    /book/{business.slug}
                   </a>
                   <Button
                     type="button"
