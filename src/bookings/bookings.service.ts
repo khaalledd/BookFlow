@@ -197,9 +197,22 @@ export class BookingsService {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;
 
+    const user = await this.prisma.user.findUnique({
+      where: { id: customerId },
+      select: { email: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const where = {
+      OR: [{ customerId }, { guestEmail: user.email }],
+    };
+
     const [data, total] = await Promise.all([
       this.prisma.booking.findMany({
-        where: { customerId },
+        where,
         skip,
         take: limit,
         orderBy: [{ date: 'desc' }, { startTime: 'desc' }],
@@ -215,7 +228,7 @@ export class BookingsService {
           },
         },
       }),
-      this.prisma.booking.count({ where: { customerId } }),
+      this.prisma.booking.count({ where }),
     ]);
 
     return new PaginatedResult<Booking>(data as any[], total, page, limit);
@@ -251,7 +264,9 @@ export class BookingsService {
         take: limit,
         orderBy: [{ date: 'asc' }, { startTime: 'asc' }],
         include: {
-          customer: { select: { id: true, name: true, phone: true } },
+          customer: {
+            select: { id: true, name: true, email: true, phone: true },
+          },
           service: { select: { id: true, name: true, durationMinutes: true } },
         },
       }),

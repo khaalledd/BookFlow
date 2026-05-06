@@ -29,15 +29,13 @@ export class BookingsController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.CUSTOMER)
+  @UseGuards(JwtAuthGuard)
   create(@Body() createBookingDto: CreateBookingDto, @CurrentUser() user: any) {
     return this.bookingsService.create(user.id, createBookingDto);
   }
 
   @Get('mine')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.CUSTOMER)
+  @UseGuards(JwtAuthGuard)
   getMine(@CurrentUser() user: any, @Query() paginationDto: PaginationDto) {
     return this.bookingsService.getMine(user.id, paginationDto);
   }
