@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
+import { useAuth } from '@/store/auth';
 
 interface Business {
   id: string;
@@ -21,6 +22,7 @@ export default function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user, isAuthenticated, isHydrated } = useAuth();
 
   // Prisma Categories Map for Frontend matching
   const categories = [
@@ -122,12 +124,21 @@ export default function ExplorePage() {
               </span>
               Explore
             </Link>
-            <Link
-              href="/register"
-              className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
-            >
-              Get Started
-            </Link>
+            {isHydrated && isAuthenticated ? (
+              <Link
+                href={user?.role === 'CUSTOMER' ? '/profile' : '/dashboard'}
+                className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
+              >
+                {user?.role === 'CUSTOMER' ? 'Profile' : 'Dashboard'}
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="font-button text-button bg-primary text-on-primary px-6 py-3 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200"
+              >
+                Get Started
+              </Link>
+            )}
           </div>
         </div>
       </nav>

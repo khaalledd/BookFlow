@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/store/auth';
 
 const faqs = [
   {
@@ -61,6 +62,8 @@ function FAQAccordion() {
 }
 
 export default function LandingPage() {
+  const { user, isAuthenticated, isHydrated } = useAuth();
+
   useEffect(() => {
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>('[data-reveal]'),
@@ -156,12 +159,21 @@ export default function LandingPage() {
               </span>
               Explore
             </Link>
-            <Link
-              href="/register"
-              className="font-button text-button bg-primary text-on-primary px-8 py-3.5 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200 text-base"
-            >
-              Get Started
-            </Link>
+            {isHydrated && isAuthenticated ? (
+              <Link
+                href={user?.role === 'CUSTOMER' ? '/profile' : '/dashboard'}
+                className="font-button text-button bg-primary text-on-primary px-8 py-3.5 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200 text-base"
+              >
+                {user?.role === 'CUSTOMER' ? 'Profile' : 'Dashboard'}
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="font-button text-button bg-primary text-on-primary px-8 py-3.5 rounded-full shadow-sm hover:bg-surface-tint active:scale-95 transition-all duration-200 text-base"
+              >
+                Get Started
+              </Link>
+            )}
           </div>
         </div>
       </nav>
