@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
+import { useAuth } from '@/store/auth';
 import api from '@/lib/api';
 
 interface Service {
@@ -31,6 +32,7 @@ export default function ServicesBookingPage() {
 
   const [business, setBusiness] = useState<Business | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user, isAuthenticated, isHydrated } = useAuth();
 
   // Step Management
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
@@ -69,6 +71,16 @@ export default function ServicesBookingPage() {
     }
   }, [params.slug]);
 
+  useEffect(() => {
+    if (isHydrated && isAuthenticated && user) {
+      setGuestData(prev => ({
+        ...prev,
+        name: user.name || prev.name,
+        email: user.email || prev.email,
+      }));
+    }
+  }, [isHydrated, isAuthenticated, user]);
+
   const fetchSlots = async (dateStr: string) => {
     setSelectedDate(dateStr);
     setSelectedSlot(null);
@@ -96,15 +108,24 @@ export default function ServicesBookingPage() {
     setErrorMsg('');
 
     try {
-      // Always book as public guest for now as per instructions/unauthenticated flow
-      await api.post('/bookings/public', {
-        businessId: business.id,
-        serviceId: selectedService.id,
-        date: selectedDate,
-        startTime: selectedSlot,
-        notes: 'Booked via Public Web Flow',
-        ...guestData,
-      });
+      if (isAuthenticated && user?.role === 'CUSTOMER') {
+        await api.post('/bookings', {
+          businessId: business.id,
+          serviceId: selectedService.id,
+          date: selectedDate,
+          startTime: selectedSlot,
+          notes: 'Booked via Authenticated Web Flow',
+        });
+      } else {
+        await api.post('/bookings/public', {
+          businessId: business.id,
+          serviceId: selectedService.id,
+          date: selectedDate,
+          startTime: selectedSlot,
+          notes: 'Booked via Public Web Flow',
+          ...guestData,
+        });
+      }
       setCurrentStep(4); // Success Step
     } catch (err: any) {
       setBookingStatus('ERROR');
