@@ -18,6 +18,7 @@ import { PaginatedResult } from '../common/types/paginated.type';
 @Injectable()
 export class BusinessesService {
   private readonly logger = new Logger(BusinessesService.name);
+  private readonly businessesListVersionKey = 'businesses:list:version';
 
   constructor(
     private readonly prisma: PrismaService,
@@ -40,7 +41,7 @@ export class BusinessesService {
       },
     });
 
-    await this.invalidateBusinessesCache();
+    await this.bumpBusinessesListVersion();
     return business;
   }
 
@@ -49,8 +50,9 @@ export class BusinessesService {
     paginationDto: PaginationDto,
   ): Promise<PaginatedResult<Business>> {
     const { page = 1, limit = 10, category, city } = paginationDto;
+    const listVersion = await this.getBusinessesListVersion();
 
-    const cacheKey = `businesses:list:${page}:${limit}:${category || ''}:${city || ''}`;
+    const cacheKey = `businesses:list:v${listVersion}:${page}:${limit}:${category || ''}:${city || ''}`;
     const cached =
       await this.cacheManager.get<PaginatedResult<Business>>(cacheKey);
     if (cached) return cached;
@@ -150,7 +152,7 @@ export class BusinessesService {
       data,
     });
 
-    await this.invalidateBusinessesCache();
+    await this.bumpBusinessesListVersion();
     await this.cacheManager.del(`businesses:${id}`);
 
     return updated;
@@ -165,7 +167,7 @@ export class BusinessesService {
     }
 
     await this.prisma.business.delete({ where: { id } });
-    await this.invalidateBusinessesCache();
+    await this.bumpBusinessesListVersion();
     await this.cacheManager.del(`businesses:${id}`);
   }
 
@@ -176,7 +178,7 @@ export class BusinessesService {
       where: { id },
       data: { logoUrl },
     });
-    await this.invalidateBusinessesCache();
+    await this.bumpBusinessesListVersion();
     await this.cacheManager.del(`businesses:${id}`);
     return updated;
   }
@@ -297,20 +299,29 @@ export class BusinessesService {
     return slug;
   }
 
-  private async invalidateBusinessesCache(): Promise<void> {
+  private async getBusinessesListVersion(): Promise<number> {
+    const rawVersion = await this.cacheManager.get<number | string>(
+      this.businessesListVersionKey,
+    );
+    const parsedVersion = Number(rawVersion);
+
+    if (!Number.isFinite(parsedVersion) || parsedVersion < 1) {
+      return 1;
+    }
+
+    return Math.floor(parsedVersion);
+  }
+
+  private async bumpBusinessesListVersion(): Promise<void> {
     try {
-      const store = (this.cacheManager as any).store;
-      if (store && typeof store.keys === 'function') {
-        const keys: string[] = await store.keys('businesses:list:*');
-        if (keys && keys.length > 0) {
-          for (const key of keys) {
-            await this.cacheManager.del(key);
-          }
-        }
-      }
+      const currentVersion = await this.getBusinessesListVersion();
+      await this.cacheManager.set(
+        this.businessesListVersionKey,
+        currentVersion + 1,
+      );
     } catch (err) {
       this.logger.warn(
-        'Could not invalidate businesses cache — entries will expire naturally',
+        'Could not bump business list cache version — entries will expire naturally',
       );
     }
   }
