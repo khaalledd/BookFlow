@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength, IsIn, IsOptional } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  MaxLength,
+  IsIn,
+  IsOptional,
+} from 'class-validator';
 import { Role } from '@prisma/client';
 
 export class RegisterDto {
@@ -20,6 +28,8 @@ export class RegisterDto {
   phone?: string;
 
   @IsOptional()
-  @IsIn([Role.CUSTOMER, Role.BUSINESS_OWNER], { message: 'Role must be either CUSTOMER or BUSINESS_OWNER' })
+  @IsIn([Role.CUSTOMER, Role.BUSINESS_OWNER], {
+    message: 'Role must be either CUSTOMER or BUSINESS_OWNER',
+  })
   role?: Role;
 }

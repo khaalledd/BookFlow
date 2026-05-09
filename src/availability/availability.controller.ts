@@ -14,6 +14,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Role } from '@prisma/client';
+import type { CurrentUserPayload } from '../auth/types/current-user.type';
 
 @Controller('businesses/:businessId/availability')
 export class AvailabilityController {
@@ -30,7 +31,7 @@ export class AvailabilityController {
   updateAvailability(
     @Param('businessId', ParseUUIDPipe) businessId: string,
     @Body() dto: UpdateAvailabilityDto,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.availabilityService.updateAvailability(
       businessId,

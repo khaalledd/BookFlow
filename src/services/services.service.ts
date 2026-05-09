@@ -129,7 +129,7 @@ export class ServicesService {
   private async invalidateBusinessCache(businessId: string): Promise<void> {
     try {
       await this.cacheManager.del(`businesses:${businessId}`);
-    } catch (err) {
+    } catch (_err) {
       this.logger.warn('Could not invalidate business cache');
     }
   }

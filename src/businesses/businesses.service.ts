@@ -2,7 +2,6 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
-  ConflictException,
   Inject,
   Logger,
 } from '@nestjs/common';
@@ -319,7 +318,7 @@ export class BusinessesService {
         this.businessesListVersionKey,
         currentVersion + 1,
       );
-    } catch (err) {
+    } catch (_err) {
       this.logger.warn(
         'Could not bump business list cache version — entries will expire naturally',
       );

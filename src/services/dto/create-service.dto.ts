@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsString, IsInt, IsNumber, IsOptional, Min, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  Min,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateServiceDto {

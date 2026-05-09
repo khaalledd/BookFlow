@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsEnum, IsOptional, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  IsOptional,
+  MaxLength,
+} from 'class-validator';
 import { BusinessCategory } from '@prisma/client';
 
 export class CreateBusinessDto {

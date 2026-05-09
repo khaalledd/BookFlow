@@ -20,7 +20,9 @@ export class UsersService {
     return user;
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<PaginatedResult<Omit<User, 'password'>>> {
+  async findAll(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Omit<User, 'password'>>> {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;
 

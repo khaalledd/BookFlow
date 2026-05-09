@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary } from 'cloudinary';
+import { PassThrough } from 'stream';
 
 @Injectable()
 export class UploadsService {
@@ -12,18 +13,22 @@ export class UploadsService {
     });
   }
 
-  async uploadImage(file: Express.Multer.File, folder: string): Promise<string> {
+  async uploadImage(
+    file: Express.Multer.File,
+    folder: string,
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         { folder },
         (error, result) => {
-          if (error || !result) return reject(new InternalServerErrorException('Image upload failed'));
+          if (error || !result)
+            return reject(
+              new InternalServerErrorException('Image upload failed'),
+            );
           resolve(result.secure_url);
         },
       );
-      
-      const stream = require('stream');
-      const bufferStream = new stream.PassThrough();
+      const bufferStream = new PassThrough();
       bufferStream.end(file.buffer);
       bufferStream.pipe(uploadStream);
     });
