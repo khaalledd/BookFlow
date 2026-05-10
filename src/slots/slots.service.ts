@@ -9,7 +9,11 @@ import { PrismaService } from '../prisma/prisma.service';
 export class SlotsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAvailableSlots(businessId: string, serviceId: string, dateString: string): Promise<string[]> {
+  async getAvailableSlots(
+    businessId: string,
+    serviceId: string,
+    dateString: string,
+  ): Promise<string[]> {
     // 1. Validate date
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     if (!datePattern.test(dateString)) {
@@ -81,7 +85,9 @@ export class SlotsService {
     });
 
     // 6. Filter out past slots if date is today
-    const nowEgypt = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Cairo' }));
+    const nowEgypt = new Date(
+      new Date().toLocaleString('en-US', { timeZone: 'Africa/Cairo' }),
+    );
     const isToday =
       nowEgypt.getDate() === dd &&
       nowEgypt.getMonth() === mm - 1 &&

@@ -1,4 +1,10 @@
-import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  Logger,
+  NestInterceptor,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Request } from 'express';
@@ -17,7 +23,9 @@ export class PerformanceInterceptor implements NestInterceptor {
 
         if (duration > 500) {
           const { method, originalUrl } = req;
-          this.logger.warn(`[SLOW REQUEST ⚠️] ${method} ${originalUrl} - ${duration}ms`);
+          this.logger.warn(
+            `[SLOW REQUEST ⚠️] ${method} ${originalUrl} - ${duration}ms`,
+          );
         }
       }),
     );

@@ -46,13 +46,17 @@ export class AvailabilityService {
     // Validate days of week uniqueness in payload
     const customDays = new Set<number>();
     for (const item of schedule) {
-        if (customDays.has(item.dayOfWeek)) {
-            throw new BadRequestException(`Duplicate dayOfWeek ${item.dayOfWeek} found in payload`);
-        }
-        if (item.startTime >= item.endTime) {
-            throw new BadRequestException(`startTime must be before endTime for dayOfWeek ${item.dayOfWeek}`);
-        }
-        customDays.add(item.dayOfWeek);
+      if (customDays.has(item.dayOfWeek)) {
+        throw new BadRequestException(
+          `Duplicate dayOfWeek ${item.dayOfWeek} found in payload`,
+        );
+      }
+      if (item.startTime >= item.endTime) {
+        throw new BadRequestException(
+          `startTime must be before endTime for dayOfWeek ${item.dayOfWeek}`,
+        );
+      }
+      customDays.add(item.dayOfWeek);
     }
 
     // Transaction for bulk replace

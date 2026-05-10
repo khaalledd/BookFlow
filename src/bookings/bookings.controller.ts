@@ -18,6 +18,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import type { CurrentUserPayload } from '../auth/types/current-user.type';
 
 @Controller('bookings')
 export class BookingsController {
@@ -30,26 +31,38 @@ export class BookingsController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  create(@Body() createBookingDto: CreateBookingDto, @CurrentUser() user: any) {
+  create(
+    @Body() createBookingDto: CreateBookingDto,
+    @CurrentUser() user: CurrentUserPayload,
+  ) {
     return this.bookingsService.create(user.id, createBookingDto);
   }
 
   @Get('mine')
   @UseGuards(JwtAuthGuard)
-  getMine(@CurrentUser() user: any, @Query() paginationDto: PaginationDto) {
+  getMine(
+    @CurrentUser() user: CurrentUserPayload,
+    @Query() paginationDto: PaginationDto,
+  ) {
     return this.bookingsService.getMine(user.id, paginationDto);
   }
 
   @Patch(':id/cancel')
   @UseGuards(JwtAuthGuard)
-  cancel(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: any) {
+  cancel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: CurrentUserPayload,
+  ) {
     return this.bookingsService.cancel(id, user.id, user.role);
   }
 
   @Patch(':id/complete')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.BUSINESS_OWNER)
-  complete(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: any) {
+  complete(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: CurrentUserPayload,
+  ) {
     return this.bookingsService.complete(id, user.id);
   }
 }
@@ -63,7 +76,7 @@ export class BusinessBookingsController {
   @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
   getBusinessBookings(
     @Param('businessId', ParseUUIDPipe) businessId: string,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
     @Query() paginationDto: PaginationDto,
     @Query('date') date?: string,
   ) {

@@ -19,6 +19,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Role } from '@prisma/client';
+import type { CurrentUserPayload } from '../auth/types/current-user.type';
 
 @Controller('businesses')
 export class BusinessesController {
@@ -29,7 +30,7 @@ export class BusinessesController {
   @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
   create(
     @Body() createBusinessDto: CreateBusinessDto,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.businessesService.create(user.id, createBusinessDto);
   }
@@ -55,7 +56,7 @@ export class BusinessesController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateBusinessDto: UpdateBusinessDto,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.businessesService.update(id, user.id, updateBusinessDto);
   }
@@ -65,7 +66,7 @@ export class BusinessesController {
   @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
   getDashboard(
     @Param('id', ParseUUIDPipe) id: string,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.businessesService.getDashboard(id, user.id);
   }
@@ -75,7 +76,7 @@ export class BusinessesController {
   @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
   remove(
     @Param('id', ParseUUIDPipe) id: string,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.businessesService.remove(id, user.id, user.role);
   }

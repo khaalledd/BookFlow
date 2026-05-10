@@ -18,6 +18,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Role } from '@prisma/client';
+import type { CurrentUserPayload } from '../auth/types/current-user.type';
 
 @Controller()
 export class ServicesController {
@@ -30,7 +31,7 @@ export class ServicesController {
   create(
     @Param('businessId', ParseUUIDPipe) businessId: string,
     @Body() createServiceDto: CreateServiceDto,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.servicesService.create(businessId, user.id, createServiceDto);
   }
@@ -60,7 +61,7 @@ export class ServicesController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateServiceDto: UpdateServiceDto,
-    @CurrentUser() user: any,
+    @CurrentUser() user: CurrentUserPayload,
   ) {
     return this.servicesService.update(id, user.id, updateServiceDto);
   }
@@ -69,7 +70,10 @@ export class ServicesController {
   @Delete('services/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.BUSINESS_OWNER, Role.ADMIN)
-  remove(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: any) {
+  remove(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: CurrentUserPayload,
+  ) {
     return this.servicesService.remove(id, user.id);
   }
 }

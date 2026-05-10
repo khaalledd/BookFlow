@@ -8,10 +8,10 @@ export class RequestIdMiddleware implements NestMiddleware {
     const reqId = uuidv4();
     req['id'] = reqId; // Store for internal use (like logger, interceptors)
     req.headers['x-request-id'] = reqId; // Also add to headers if missing
-    
+
     // Attach to response headers
     res.setHeader('x-request-id', reqId);
-    
+
     next();
   }
 }
