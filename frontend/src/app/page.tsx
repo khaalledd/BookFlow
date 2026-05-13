@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/store/auth';
+import { WarmExploreData } from '@/components/WarmExploreData';
 
 const faqs = [
   {
@@ -86,6 +87,8 @@ export default function LandingPage() {
 
   return (
     <>
+      <WarmExploreData />
+
       <style jsx global>{`
         html {
           scroll-behavior: smooth;
