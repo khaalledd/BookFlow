@@ -45,6 +45,14 @@ export default function DashboardOverview() {
   const todayCount = stats?.todayCount || 0;
   const thisWeekCount = stats?.thisWeekCount || 0;
   const popularCount = stats?.popularServices?.reduce((acc: number, s: any) => acc + s.count, 0) || 0;
+  const bookingPath = businessSlug
+    ? `/book/${businessSlug}`
+    : '/book/your-business';
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (typeof window !== 'undefined' ? window.location.origin : '');
+  const bookingUrl = baseUrl ? `${baseUrl}${bookingPath}` : bookingPath;
   const statCardClass = "col-span-12 md:col-span-4 bg-white rounded-xl p-md border border-outline-variant/40 shadow-sm flex flex-col justify-between";
   const panelClass = "bg-white rounded-xl border border-outline-variant/40 shadow-sm flex flex-col";
 
@@ -165,13 +173,17 @@ export default function DashboardOverview() {
               </p>
               
               <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-xl">
-                <div className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all">
-                  {businessSlug ? `verdantbook.com/book/${businessSlug}` : "verdantbook.com/book/your-business"}
-                </div>
+                <a
+                  href={businessSlug ? bookingPath : undefined}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 text-on-surface font-body-md truncate w-full text-left select-all hover:border-primary/40 hover:text-primary transition-colors"
+                >
+                  {bookingUrl}
+                </a>
                 <button 
                   onClick={() => {
-                    const url = businessSlug ? `verdantbook.com/book/${businessSlug}` : "verdantbook.com/book/your-business";
-                    navigator.clipboard.writeText(url);
+                    navigator.clipboard.writeText(bookingUrl);
                     setCopied(true);
                     setTimeout(() => setCopied(false), 2000);
                   }}
